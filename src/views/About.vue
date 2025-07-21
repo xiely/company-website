@@ -1,7 +1,7 @@
 <!-- src/views/About.vue -->
 <template>
-  <div>
-    <h1>关于我们</h1>
-    <router-link to="/">返回首页</router-link>
-  </div>
+  <section>
+    <h2>关于我们</h2>
+    <p>这里写公司介绍、团队、文化等信息。</p>
+  </section>
 </template>
