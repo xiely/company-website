@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Active Slide - fullPage.js</title>
+    <meta name="author" content="Matthew Howell" />
+    <meta name="description" content="fullPage continuous scrolling demo." />
+    <meta name="keywords"  content="fullpage,jquery,demo,scroll,loop,continuous" />
+    <meta name="Resource-type" content="Document" />
+
+    <link rel="stylesheet" type="text/css" href="./public/fullpage.css" />
+    <link rel="stylesheet" type="text/css" href="./public/examples.css" />
+
+    <style>
+        .intro {
+            text-align: center;
+            margin-top: 50px; /* 调整位置 */
+        }
+
+        .intro h2, .intro h3 {
+            opacity: 0; /* 初始透明度为0 */
+            transform: translateY(20px); /* 初始位置向下偏移 */
+            animation: fadeInUp 2s ease-in-out forwards; /* 应用动画 */
+        }
+
+        /* 为 h3 设置动画延迟 */
+        .intro h3 {
+            animation-delay: 2s; /* 在 h2 动画完成后开始 h3 的动画 */
+        }
+
+        /* 定义动画 */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px); /* 初始位置向下偏移 */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* 最终位置回到原点 */
+            }
+        }
+    </style>
+
+    <!--[if IE]>
+        <script type="text/javascript">
+             var console = { log: function() {} };
+        </script>
+    <![endif]-->
+</head>
+<body>
+
+<ul id="menu">
+    <li data-menuanchor="firstPage" class="active"><a href="#firstPage">首页</a></li>
+    <li data-menuanchor="secondPage"><a href="#secondPage">服务项目</a></li>
+    <li data-menuanchor="3rdPage"><a href="#3rdPage">成功案例</a></li>
+</ul>
+
+<div id="fullpage">
+    <div class="section active" id="section0">
+        <div class="slide" id="slide1">
+            <div class="intro">
+                <h2>高端技术团队为你服务</h2>
+                <h3>专业的团队，优质的服务。</h3>
+            </div>
+        </div>
+        <div class="slide" id="slide2">
+            <div class="intro">
+                <h2>只做一件事</h2>
+                <h3>帮您解决痛点问题</h3>
+            </div>
+        </div>
+        <div class="slide" id="slide3">
+            <div class="intro">
+                <h2>我发发发发饿啊没法</h2>
+                <h3>发发发发啊发发</h3>
+            </div>
+        </div>
+        <div class="scroll-down-hint">
+            <p class="slide-tip">滑动查看下一页</p>
+            <div class="arrow-down"></div>
+        </div>
+    </div>
+    <div class="section " id="section1">
+        <h1>Section 1</h1>
+    </div>
+    <div class="section" id="section2">
+        <div class="intro">
+            <h1>Section 3</h1>
+        </div>
+    </div>
+</div>
+
+<script src="./public/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./public/fullpage.js"></script>
+<script type="text/javascript" src="./public/examples.js"></script>
+<script type="text/javascript">
+    // $(document).ready(function() {
+        var myFullpage = new fullpage('#fullpage', {
+            sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
+            anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
+            menu: '#menu',
+            slidesNavigation: true,
+            lazyLoad: true,
+            credits: {enabled: false},
+            autoScrolling: true,
+            afterLoad: function(origin, destination, direction) {
+                console.log("@@@@@@@@@@")
+            }
+        });
+
+        // 自动切换水平滑块
+        var currentSlide = -1; // 当前滑块索引
+        var totalSlides = 3;  // 总滑块数量
+
+        function autoSlide() {
+            // 移动到下一个滑块
+            currentSlide = (currentSlide + 1) % totalSlides;
+            if (currentSlide >= 3) {
+            currentSlide = -1
+        }
+            myFullpage.moveTo(1, currentSlide); // 移动到第一个 section 的第 currentSlide 个滑块
+        }
+
+        setInterval(autoSlide, 2000); // 每2秒自动切换一次滑块
+
+        // 隐藏 section0 下的滑块导航点
+        $('#section0 .fp-slidesNav').hide();
+
+        // 添加点击事件
+        $('.scroll-down-hint').click(function() {
+            myFullpage.moveSectionDown(); // 滚动到下一页
+        });
+    // });
+</script>
+
+</body>
+</html>

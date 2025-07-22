@@ -11,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-         body, html {
+        body, html {
             font-family: Arial, sans-serif;
         }
 
@@ -24,6 +24,9 @@
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .navbar h2 {
@@ -31,12 +34,29 @@
             font-size: 1.5em;
             color: #333;
         }
- 
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .navbar ul li a:hover,
+        .navbar ul li a.active {
+            color: #3498db;
+        }
+
         .section {
             color: #333;
             background: #fff;
         }
- 
+
         /* 通用动画类 */
         .animate {
             opacity: 0;
@@ -346,11 +366,58 @@
         scroll-behavior: smooth;
         padding: 0 20px;
     }
-</style>
+    .scroll-down-hint {
+    position: absolute;
+    bottom: 20px; /* 距离底部 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    /* background: rgba(0, 0, 0, 0.5); */
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.scroll-down-hint p {
+    margin: 0;
+    opacity: 0; /* 初始透明度为0 */
+    animation: fadeInDown 3s infinite; /* 应用动画 */
+}
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.arrow-down {
+    margin:  0 auto 10px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #fff;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(135deg);
+}
+    </style>
 </head>
 <body>
     <div class="navbar">
-        <h2 id="navbar-title">创新科技</h2> <!-- 默认显示第一屏的标题 -->
+        <h2>创新科技</h2>
+        <ul>
+            <li ><a href="#section1" data-menuanchor="page1">首页</a></li>
+            <li ><a href="#section2" data-menuanchor="page2">数据统计</a></li>
+            <li ><a href="#section3" data-menuanchor="page3">产品展示</a></li>
+            <li ><a href="#section4" data-menuanchor="page4">服务流程</a></li>
+            <li ><a href="#section6" data-menuanchor="page6">联系我们</a></li>
+            <li ><a href="#section7" data-menuanchor="page7">合作伙伴</a></li>
+        </ul>
     </div>
     <div id="fullpage">
         <!-- 第一屏：Hero区域 -->
@@ -359,28 +426,25 @@
                 <div class="hero-content">
                     <h1 class="animate fade-up">创新科技</h1>
                     <p class="animate fade-up">引领未来发展的先驱者</p>
-                    <button class="animate fade-up">了解更多</button>
                 </div>
                 <div class="hero-content">
                     <h1 class="animate fade-up">智能解决方案</h1>
                     <p class="animate fade-up">提供高效、智能的解决方案</p>
-                    <button class="animate fade-up">了解更多</button>
                 </div>
                 <div class="hero-content">
                     <h1 class="animate fade-up">卓越服务</h1>
                     <p class="animate fade-up">客户满意度高达 98%</p>
-                    <button class="animate fade-up">了解更多</button>
                 </div>
             </div>
-            <div class="hero-scroll-arrows">
-                <button class="hero-scroll-left" onclick="scrollHeroContent(-1)">&#10094;</button>
-                <button class="hero-scroll-right" onclick="scrollHeroContent(1)">&#10095;</button>
-            </div>
+            <div class="scroll-down-hint">
+            <p class="slide-tip animate fade-up">滑动查看下一页</p>
+            <div class="arrow-down"></div>
         </div>
- 
+        </div>
+
         <!-- 新增：数据统计屏 -->
         <div class="section" id="section2">
-            <h2 class="section-title animate fade-up">我们的成就</h2>
+            <!-- <h2 class="section-title animate fade-up">我们的成就</h2> -->
             <div class="stats-container">
                 <div class="stat-item animate fade-up">
                     <div class="stat-number">1000+</div>
@@ -400,27 +464,27 @@
                 </div>
             </div>
         </div>
- 
+
         <!-- 新增：产品展示屏 -->
         <div class="section" id="section3">
-            <h2 class="section-title animate fade-up">产品展示</h2>
+            <!-- <h2 class="section-title animate fade-up">产品展示</h2> -->
             <div class="products-grid">
                 <div class="product-card animate fade-left">
-                    <img src="https://picsum.photos/400/200" class="product-image" alt="产品1">
+                    <img src="./src/assets/images/product1.jpg" class="product-image" alt="产品1">
                     <div class="product-info">
                         <h3>智能产品 A</h3>
                         <p>革命性的智能解决方案，为您提供极致体验</p>
                     </div>
                 </div>
                 <div class="product-card animate fade-up">
-                    <img src="https://picsum.photos/401/200" class="product-image" alt="产品2">
+                    <img src="./src/assets/images/product2.jpg" class="product-image" alt="产品2">
                     <div class="product-info">
                         <h3>智能产品 B</h3>
                         <p>引领行业标准的创新科技产品</p>
                     </div>
                 </div>
                 <div class="product-card animate fade-right">
-                    <img src="https://picsum.photos/402/200" class="product-image" alt="产品3">
+                    <img src="./src/assets/images/product3.jpg" class="product-image" alt="产品3">
                     <div class="product-info">
                         <h3>智能产品 C</h3>
                         <p>为企业定制的专业级解决方案</p>
@@ -428,10 +492,10 @@
                 </div>
             </div>
         </div>
- 
+
         <!-- 新增：服务流程屏 -->
         <div class="section" id="section4">
-            <h2 class="section-title animate fade-up">服务流程</h2>
+            <!-- <h2 class="section-title animate fade-up">服务流程</h2> -->
             <div class="process-timeline">
                 <div class="process-step animate fade-up">
                     <div class="step-number">1</div>
@@ -455,44 +519,7 @@
                 </div>
             </div>
         </div>
- 
-        <!-- 新增：客户评价屏 -->
-        <div class="section" id="section5">
-            <h2 class="section-title animate fade-up">客户评价</h2>
-            <div class="testimonials-container">
-                <div class="testimonial-card animate fade-left">
-                    <p>"使用他们的产品后，我们的工作效率提升了30%以上。"</p>
-                    <div class="client-info">
-                        <img src="https://picsum.photos/60/60" class="client-avatar" alt="客户1">
-                        <div>
-                            <h4>前端切图仔001</h4>
-                            <p>科技公司 CEO</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card animate fade-up">
-                    <p>"专业的团队，优质的服务，是值得信赖的长期合作伙伴。"</p>
-                    <div class="client-info">
-                        <img src="https://picsum.photos/61/61" class="client-avatar" alt="客户2">
-                        <div>
-                            <h4>前端切图仔001</h4>
-                            <p>互联网公司 CTO</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card animate fade-right">
-                    <p>"他们的创新解决方案帮助我们解决了长期困扰的问题。"</p>
-                    <div class="client-info">
-                        <img src="https://picsum.photos/62/62" class="client-avatar" alt="客户3">
-                        <div>
-                            <h4>前端切图仔001</h4>
-                            <p>制造业 总监</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
- 
+
         <!-- 新增：联系我们屏 -->
         <div class="section" id="section6">
             <div class="contact-container">
@@ -517,65 +544,102 @@
                 </div>
             </div>
         </div>
- 
         <!-- 新增：合作伙伴屏 -->
         <div class="section" id="section7">
-            <h2 class="section-title animate fade-up">合作伙伴</h2>
+            <!-- <h2 class="section-title animate fade-up">合作伙伴</h2> -->
             <div class="partners-grid">
                 <div class="partner-logo animate fade-scale">
-                    <img src="https://picsum.photos/100/50" alt="合作伙伴1">
+                    <img src="./src/assets/images/partener1.jpg" alt="合作伙伴1">
                 </div>
                 <div class="partner-logo animate fade-scale">
-                    <img src="https://picsum.photos/101/50" alt="合作伙伴2">
+                    <img src="./src/assets/images/partener2.jpg" alt="合作伙伴2">
                 </div>
                 <div class="partner-logo animate fade-scale">
-                    <img src="https://picsum.photos/102/50" alt="合作伙伴3">
+                    <img src="./src/assets/images/partener3.jpg" alt="合作伙伴3">
                 </div>
                 <div class="partner-logo animate fade-scale">
-                    <img src="https://picsum.photos/103/50" alt="合作伙伴4">
+                    <img src="./src/assets/images/partener4.jpg" alt="合作伙伴4">
                 </div>
             </div>
         </div>
     </div>
- 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
     <script>
         function scrollHeroContent(direction) {
-    const container = document.querySelector('.hero-content-container');
-    const scrollAmount = container.scrollWidth / container.children.length;
-    container.scrollLeft += direction * scrollAmount;
-}
+            const container = document.querySelector('.hero-content-container');
+            const scrollAmount = container.scrollWidth / container.children.length;
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+            if (direction === 1 && container.scrollLeft >= maxScrollLeft) {
+                container.scrollLeft = 0; // 如果滚动到最右边，回到最左边
+            } else if (direction === -1 && container.scrollLeft <= 0) {
+                container.scrollLeft = maxScrollLeft; // 如果滚动到最左边，跳到最右边
+            } else {
+                container.scrollLeft += direction * scrollAmount;
+            }
+        }
+
+        // 自动滚动逻辑
+        let autoScrollInterval;
+        const autoScrollSpeed = 3000; // 自动滚动的时间间隔（毫秒）
+
+        function startAutoScroll() {
+            autoScrollInterval = setInterval(() => {
+                scrollHeroContent(1); // 自动向右滚动
+            }, autoScrollSpeed);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(autoScrollInterval);
+        }
+
+        // 在页面加载时启动自动滚动
+        window.onload = () => {
+            startAutoScroll();
+        };
+
+        // 如果需要在鼠标悬停时停止滚动，可以添加以下事件监听器
+        const heroContentContainer = document.querySelector('.hero-content-container');
+        heroContentContainer.addEventListener('mouseenter', stopAutoScroll);
+        heroContentContainer.addEventListener('mouseleave', startAutoScroll);
         // 记录已经执行过动画的部分
         const animatedSections = new Set();
- 
         new fullpage('#fullpage', {
             autoScrolling: true,
             scrollHorizontally: true,
             navigation: true,
             navigationPosition: 'right',
             scrollingSpeed: 700,
-
+            anchors: ['page1', 'page2', 'page3', 'page4', 'page6', 'page7'],
+            menu: '.navbar ul',
             afterLoad: function(origin, destination, direction) {
                 const currentSection = destination.item;
-
-                // 获取当前部分的所有需要动画的元素
                 const animateElements = currentSection.querySelectorAll('.animate');
-
-                // 为每个元素添加动画类
                 animateElements.forEach((el, index) => {
-                    // 移除之前的动画类（如果有）
                     el.classList.remove('active');
-                    // 添加延迟，实现错落动画效果
                     setTimeout(() => {
                         el.classList.add('active');
                     }, index * 200);
                 });
-
-                // 更新导航栏标题
-                const sectionTitle = currentSection.querySelector('.section-title');
-                if (sectionTitle) {
-                    document.getElementById('navbar-title').innerText = sectionTitle.innerText;
-                }
+                // 更新导航栏的 active 样式
+                const links = document.querySelectorAll('.navbar ul li a');
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-menuanchor') === destination.anchor) {
+                        link.classList.add('active');
+                    }
+                });
+            },
+            onLeave: function(origin, destination, direction) {
+                // 更新导航栏的 active 样式
+                const links = document.querySelectorAll('.navbar ul li a');
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-menuanchor') === destination.anchor) {
+                        link.classList.add('active');
+                    }
+                });
             }
         });
     </script>
