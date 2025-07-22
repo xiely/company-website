@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>整屏滚动展示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+         body, html {
+            font-family: Arial, sans-serif;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+ 
+        .section {
+            color: #333;
+            background: #fff;
+        }
+ 
+        /* 通用动画类 */
+        .animate {
+            opacity: 0;
+            transition: all 1s ease;
+        }
+ 
+        .animate.fade-up {
+            transform: translateY(50px);
+        }
+ 
+        .animate.fade-left {
+            transform: translateX(-50px);
+        }
+ 
+        .animate.fade-right {
+            transform: translateX(50px);
+        }
+ 
+        .animate.fade-scale {
+            transform: scale(0.8);
+        }
+ 
+        /* 激活动画 */
+        .animate.active {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+ 
+        /* 第一屏：Hero区域 */
+        #section1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+ 
+        .hero-content {
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+ 
+        .hero-content h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+ 
+        .hero-content p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+ 
+        /* 第二屏：产品特性 */
+        .features-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 0 10%;
+        }
+ 
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            flex: 1;
+        }
+ 
+        /* 第三屏：关于我们 */
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 0 10%;
+        }
+ 
+        .about-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+ 
+        .about-image img {
+            width: 100%;
+            height: auto;
+        }
+ 
+        .about-content {
+            flex: 1;
+        }
+ 
+        /* 第四屏：团队展示 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 0 10%;
+        }
+ 
+        .team-member {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+ 
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+ 
+        /* 新增：数据统计区域样式 */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 0 10%;
+            text-align: center;
+        }
+ 
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+ 
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+ 
+        /* 新增：产品展示区域样式 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 0 10%;
+        }
+ 
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+ 
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+ 
+        .product-info {
+            padding: 20px;
+        }
+ 
+        /* 新增：服务流程样式 */
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10%;
+            position: relative;
+        }
+ 
+        .process-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+ 
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5em;
+        }
+ 
+        /* 新增：客户评价样式 */
+        .testimonials-container {
+            display: flex;
+            gap: 30px;
+            padding: 0 10%;
+        }
+ 
+        .testimonial-card {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+ 
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+ 
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+ 
+        /* 新增：联系我们样式 */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            padding: 0 10%;
+        }
+ 
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+ 
+        .form-group {
+            margin-bottom: 20px;
+        }
+ 
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+ 
+        /* 新增：合作伙伴样式 */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 0 10%;
+        }
+ 
+        .partner-logo {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .hero-content-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 0 20px;
+    }
+
+    .hero-content {
+        min-width: 100%; /* 确保每个内容占据全屏宽度 */
+        text-align: center;
+        padding: 0 20px;
+        transition: all 1s ease;
+    }
+
+    .hero-content h1 {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+    }
+    .hero-scroll-arrows {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .hero-scroll-arrows button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 2em;
+        cursor: pointer;
+        margin: 0 10px;
+    }
+
+    .hero-scroll-arrows button:hover {
+        background-color: #2980b9;
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2 id="navbar-title">创新科技</h2> <!-- 默认显示第一屏的标题 -->
+    </div>
+    <div id="fullpage">
+        <!-- 第一屏：Hero区域 -->
+        <div class="section" id="section1">
+            <div class="hero-content-container">
+                <div class="hero-content">
+                    <h1 class="animate fade-up">创新科技</h1>
+                    <p class="animate fade-up">引领未来发展的先驱者</p>
+                    <button class="animate fade-up">了解更多</button>
+                </div>
+                <div class="hero-content">
+                    <h1 class="animate fade-up">智能解决方案</h1>
+                    <p class="animate fade-up">提供高效、智能的解决方案</p>
+                    <button class="animate fade-up">了解更多</button>
+                </div>
+                <div class="hero-content">
+                    <h1 class="animate fade-up">卓越服务</h1>
+                    <p class="animate fade-up">客户满意度高达 98%</p>
+                    <button class="animate fade-up">了解更多</button>
+                </div>
+            </div>
+            <div class="hero-scroll-arrows">
+                <button class="hero-scroll-left" onclick="scrollHeroContent(-1)">&#10094;</button>
+                <button class="hero-scroll-right" onclick="scrollHeroContent(1)">&#10095;</button>
+            </div>
+        </div>
+ 
+        <!-- 新增：数据统计屏 -->
+        <div class="section" id="section2">
+            <h2 class="section-title animate fade-up">我们的成就</h2>
+            <div class="stats-container">
+                <div class="stat-item animate fade-up">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">服务客户</div>
+                </div>
+                <div class="stat-item animate fade-up">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">合作伙伴</div>
+                </div>
+                <div class="stat-item animate fade-up">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">完成项目</div>
+                </div>
+                <div class="stat-item animate fade-up">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">客户满意度</div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- 新增：产品展示屏 -->
+        <div class="section" id="section3">
+            <h2 class="section-title animate fade-up">产品展示</h2>
+            <div class="products-grid">
+                <div class="product-card animate fade-left">
+                    <img src="https://picsum.photos/400/200" class="product-image" alt="产品1">
+                    <div class="product-info">
+                        <h3>智能产品 A</h3>
+                        <p>革命性的智能解决方案，为您提供极致体验</p>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="https://picsum.photos/401/200" class="product-image" alt="产品2">
+                    <div class="product-info">
+                        <h3>智能产品 B</h3>
+                        <p>引领行业标准的创新科技产品</p>
+                    </div>
+                </div>
+                <div class="product-card animate fade-right">
+                    <img src="https://picsum.photos/402/200" class="product-image" alt="产品3">
+                    <div class="product-info">
+                        <h3>智能产品 C</h3>
+                        <p>为企业定制的专业级解决方案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- 新增：服务流程屏 -->
+        <div class="section" id="section4">
+            <h2 class="section-title animate fade-up">服务流程</h2>
+            <div class="process-timeline">
+                <div class="process-step animate fade-up">
+                    <div class="step-number">1</div>
+                    <h3>需求分析</h3>
+                    <p>深入了解客户需求，制定个性化方案</p>
+                </div>
+                <div class="process-step animate fade-up">
+                    <div class="step-number">2</div>
+                    <h3>方案设计</h3>
+                    <p>专业团队设计最优解决方案</p>
+                </div>
+                <div class="process-step animate fade-up">
+                    <div class="step-number">3</div>
+                    <h3>开发实施</h3>
+                    <p>高效执行，确保项目质量</p>
+                </div>
+                <div class="process-step animate fade-up">
+                    <div class="step-number">4</div>
+                    <h3>售后服务</h3>
+                    <p>持续支持，及时响应</p>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- 新增：客户评价屏 -->
+        <div class="section" id="section5">
+            <h2 class="section-title animate fade-up">客户评价</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card animate fade-left">
+                    <p>"使用他们的产品后，我们的工作效率提升了30%以上。"</p>
+                    <div class="client-info">
+                        <img src="https://picsum.photos/60/60" class="client-avatar" alt="客户1">
+                        <div>
+                            <h4>前端切图仔001</h4>
+                            <p>科技公司 CEO</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate fade-up">
+                    <p>"专业的团队，优质的服务，是值得信赖的长期合作伙伴。"</p>
+                    <div class="client-info">
+                        <img src="https://picsum.photos/61/61" class="client-avatar" alt="客户2">
+                        <div>
+                            <h4>前端切图仔001</h4>
+                            <p>互联网公司 CTO</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate fade-right">
+                    <p>"他们的创新解决方案帮助我们解决了长期困扰的问题。"</p>
+                    <div class="client-info">
+                        <img src="https://picsum.photos/62/62" class="client-avatar" alt="客户3">
+                        <div>
+                            <h4>前端切图仔001</h4>
+                            <p>制造业 总监</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- 新增：联系我们屏 -->
+        <div class="section" id="section6">
+            <div class="contact-container">
+                <div class="contact-info animate fade-left">
+                    <h2>联系我们</h2>
+                    <p>地址：北京市*******</p>
+                    <p>电话：010-12345678</p>
+                    <p>邮箱：contact@example.com</p>
+                </div>
+                <div class="contact-form animate fade-right">
+                    <h3>发送消息</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="您的邮箱">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="您的留言" rows="4"></textarea>
+                    </div>
+                    <button class="submit-btn">发送</button>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- 新增：合作伙伴屏 -->
+        <div class="section" id="section7">
+            <h2 class="section-title animate fade-up">合作伙伴</h2>
+            <div class="partners-grid">
+                <div class="partner-logo animate fade-scale">
+                    <img src="https://picsum.photos/100/50" alt="合作伙伴1">
+                </div>
+                <div class="partner-logo animate fade-scale">
+                    <img src="https://picsum.photos/101/50" alt="合作伙伴2">
+                </div>
+                <div class="partner-logo animate fade-scale">
+                    <img src="https://picsum.photos/102/50" alt="合作伙伴3">
+                </div>
+                <div class="partner-logo animate fade-scale">
+                    <img src="https://picsum.photos/103/50" alt="合作伙伴4">
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+    <script>
+        function scrollHeroContent(direction) {
+    const container = document.querySelector('.hero-content-container');
+    const scrollAmount = container.scrollWidth / container.children.length;
+    container.scrollLeft += direction * scrollAmount;
+}
+        // 记录已经执行过动画的部分
+        const animatedSections = new Set();
+ 
+        new fullpage('#fullpage', {
+            autoScrolling: true,
+            scrollHorizontally: true,
+            navigation: true,
+            navigationPosition: 'right',
+            scrollingSpeed: 700,
+
+            afterLoad: function(origin, destination, direction) {
+                const currentSection = destination.item;
+
+                // 获取当前部分的所有需要动画的元素
+                const animateElements = currentSection.querySelectorAll('.animate');
+
+                // 为每个元素添加动画类
+                animateElements.forEach((el, index) => {
+                    // 移除之前的动画类（如果有）
+                    el.classList.remove('active');
+                    // 添加延迟，实现错落动画效果
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, index * 200);
+                });
+
+                // 更新导航栏标题
+                const sectionTitle = currentSection.querySelector('.section-title');
+                if (sectionTitle) {
+                    document.getElementById('navbar-title').innerText = sectionTitle.innerText;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
