@@ -340,7 +340,13 @@
     .hero-scroll-arrows button:hover {
         background-color: #2980b9;
     }
-    </style>
+    .hero-content-container {
+        display: flex;
+        overflow-x: hidden; /* 修改为隐藏滚动条 */
+        scroll-behavior: smooth;
+        padding: 0 20px;
+    }
+</style>
 </head>
 <body>
     <div class="navbar">
