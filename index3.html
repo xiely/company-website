@@ -60,7 +60,7 @@
         /* 通用动画类 */
         .animate {
             opacity: 0;
-            transition: all 1s ease;
+            transition: all 0.8s ease;
         }
  
         .animate.fade-up {
@@ -86,8 +86,178 @@
         }
  
         /* 第一屏：Hero区域 */
-        #section1 {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        #section2 {
+            background-image: linear-gradient(128deg,#c6d9e7,#6c85f3);
+            overflow: hidden;
+        }
+        #section2 .slide{
+            text-align: center;
+            color: #fff;
+            position: relative;
+             overflow: hidden;
+        }
+        .box {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 55%;
+            height: 0vh;
+            margin: 0 auto;
+            overflow: hidden;
+            background-color:  rgba(255, 255, 255, 0.1);
+            /* animation: shadowFadeIn 0.8s ease-in-out forwards; */
+        }
+        .ol-wrap .li-item{
+            list-style: none;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+        }
+        .animate.shadowFadeIn.active{
+            animation: shadowFadeIn 0.8s ease-in-out forwards;
+        }
+        @keyframes shadowFadeIn {
+            from {
+                transform: scale(0.5) translate(100%, 100%); /* 初始位置在右下角 */
+                opacity: 0;
+                height: 0;
+            }
+            to {
+                transform: scale(1) translate(0, 0); /* 最终位置在中心 */
+            opacity: 1;
+            height: 70vh;
+                }
+            }
+       
+        .ol-wrap .li-item:nth-child(1) {
+            left: 0;
+            top: 0;
+            border-top: 4px solid #fff;
+            border-left: 4px solid #fff;
+        }
+        .ol-wrap .li-item:nth-child(2) {
+            right: 0;
+            top: 0;
+            border-top: 4px solid #fff;
+            border-right: 4px solid #fff;
+        }
+        .ol-wrap .li-item:nth-child(3) {
+            left: 0;
+            bottom: 0;
+            border-left: 4px solid #fff;
+            border-bottom: 4px solid #fff;
+        }
+        .ol-wrap .li-item:nth-child(4) {
+            right: 0;
+            bottom: 0;
+            border-right: 4px solid #fff;
+            border-bottom: 4px solid #fff;
+        }
+        .solid-wrap{
+            position: absolute;
+            left: 27.5%;
+            top: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+             width: 0;
+            height: 0;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 2px dashed #fff; 
+        }
+        .animate.fadeInBorder.active {
+            animation: fadeInBorder 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeInBorder {
+            0% {
+                width: 10%;
+                height: 20vh;
+            }
+           
+            50% {
+                width: 22.5%;
+                height: 40vh;
+            }
+            100% {
+                width: 45%;
+                height: 80vh;
+            }
+        }
+
+        .fp-controlArrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .fp-controlArrow:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+        .fp-controlArrow.fp-prev {
+            left: 25%;
+        }
+        .fp-controlArrow.fp-next {
+            right:25%;
+        }
+        .fp-controlArrow::before {
+            /* content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-1px); */
+        }
+        .fp-controlArrow.fp-prev::before {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 60px;
+            /* background-color: white; */
+            position: absolute;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            transform: rotate(-45deg);
+        }
+        .fp-controlArrow.fp-next::before {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 60px;
+            /* background-color: white; */
+            position: absolute;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(45deg);
+        }
+        .fp-bottom{
+            display: none;
+        }
+        #myVideo{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            top:0;
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            background-color: black; /* in case the video doesn't fit the whole page*/
+            background-image: /* our video */;
+            background-position: center center;
+            background-size: contain;
+            object-fit: cover; /*cover video background */
+            z-index:3;
         }
  
         .hero-content {
@@ -97,13 +267,21 @@
         }
  
         .hero-content h1 {
+            position: relative;
+            z-index: 999;
             font-size: 4em;
             margin-bottom: 20px;
         }
  
         .hero-content p {
+            position: relative;
+            z-index: 999;
             font-size: 1.5em;
             margin-bottom: 30px;
+        }
+        .move-left{
+            position: relative;
+            z-index: 999;
         }
  
         /* 第二屏：产品特性 */
@@ -195,27 +373,95 @@
         /* 新增：产品展示区域样式 */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(4, 1fr);
+            /* gap: 40px; */
             padding: 0 10%;
         }
  
         .product-card {
             background: white;
-            border-radius: 20px;
+            /* border-radius: 20px; */
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex; /* 启用 Flexbox 布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中（如果需要） */
+    flex-direction: column; /* 子元素垂直排列 */
+    height: 250px; /* 确保父容器高度占满整个卡片 */
         }
  
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
+            position: absolute; /* 将图片绝对定位到卡片的顶部 */
+            top: 0;
+            left: 0;
         }
  
         .product-info {
-            padding: 20px;
+           position: relative; /* 相对定位，确保内容在图片之上 */
+            z-index: 10; /* 确保内容在图片之上 */
+            color: #fff; /* 文字颜色 */
+            text-align: center; /* 文字水平居中 */
+            padding: 20px; /* 内边距 */
+            
+            width: 100%; /* 宽度占满卡片 */
+            height: 250px; /* 高度自适应内容 */
+            transition: all 0.3s ease; /* 动画效果 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            /* transition: transform 0.3s ease, opacity 0.3s ease; 
+            transform: translateY(100%);  */
+            
         }
+        .product-info:hover {
+            background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+        .product-info .title {
+            opacity: 0;
+            font-size: 28px;
+            position: absolute;
+        }
+        .product-info .description {
+             opacity: 0;
+            position: absolute;
+        }
+        .product-card:hover .title{
+            animation: fadeInBottom1 0.5s ease-in-out forwards;
+        }
+        .product-card:hover .description{
+            animation: fadeInBottom2 0.5s ease-in-out forwards;
+            animation-delay: 0.25s;
+        }
+        @keyframes fadeInBottom1 {
+            0% {
+                opacity: 0;
+                bottom: -10%;
+            }
+            100% {
+                opacity: 1;
+                bottom: 50%;
+            }
+        }
+        @keyframes fadeInBottom2 {
+            0% {
+                opacity: 0;
+                bottom: -10%;
+            }
+            100% {
+                opacity: 1;
+                bottom: 38%;
+            }
+        }
+
+        /* .product-card:hover .product-info{
+            opacity: 1; 
+            transform: translateY(100%);
+        } */
  
         /* 新增：服务流程样式 */
         .process-timeline {
@@ -274,6 +520,94 @@
         }
  
         /* 新增：联系我们样式 */
+        .contact-list-wrap .contact-list-wrap-body {
+            position: relative;
+            height: 100%;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            position: absolute !important;
+            background: url('./src/assets/images/map.png') no-repeat;
+            background-size: cover;
+        }
+        .contact-wrap .contact-cont {
+            transform: translateX(0);
+        }
+        .contact-wrap .contact-cont {
+            position: absolute;
+            bottom: 0;
+            z-index: 8;
+            right: 0;
+            background: transparent;
+            border-bottom: 950px solid;
+            border-color: #ffffff;
+            border-color: #ffffff;
+            border-left: 350px solid transparent;
+            border-right: 0px solid transparent;
+            /* animation: fadeInLeft 1s ease-in-out forwards;  */
+        }
+        .animate.fadeInLeft.active{
+            animation: fadeInLeft 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeInLeft {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 45%;;
+            }
+        }
+        .contact-wrap .contact-text {
+            font-size: 16px;
+            font-weight: thin;
+            position: absolute;
+            top: 50%;
+            z-index: 9;
+            width: 25%;
+            text-align: right;
+            right: 80px;
+            transform: translateY(-50%);
+        }
+        .contact-text .title{
+            font-size: 24px;
+        }
+         .contact-text .line {
+            display: inline-block;
+            width: 100px;
+            height: 1px;
+            background: red;
+            opacity: 1;
+        }
+        .contact-text .title:hover .line {
+            width: 50px;
+
+        }
+        .contact-wrap .contact-text .subtitle {
+            margin-top: 20px;
+            font-size: 20px;
+            opacity: 1;
+            transform: translateY(0);
+            color: #595757;
+        }
+        .contact-text .details {
+            margin-top: 40px;
+        }
+        .details li {
+            list-style: none;
+        }
+        .contact-text .details .mark {
+    position: relative;
+    margin-bottom: 40px;
+    padding-bottom: 5px;
+    font-size: 12px;
+    color: #444444;
+    color: #c4c4c4;
+    background: transparent;
+    padding: 0;
+}
         .contact-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -346,8 +680,7 @@
         justify-content: center;
         margin-top: 20px;
     }
-
-    .hero-scroll-arrows button {
+     .hero-scroll-arrows button {
         background-color: #3498db;
         color: white;
         border: none;
@@ -366,57 +699,58 @@
         scroll-behavior: smooth;
         padding: 0 20px;
     }
+    /* 滑动查看下一页 */
     .scroll-down-hint {
-    position: absolute;
-    bottom: 20px; /* 距离底部 20px */
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 12px;
-    color: #fff;
-    cursor: pointer;
-    /* background: rgba(0, 0, 0, 0.5); */
-    padding: 10px 20px;
-    border-radius: 5px;
-}
-
-.scroll-down-hint p {
-    margin: 0;
-    opacity: 0; /* 初始透明度为0 */
-    animation: fadeInDown 3s infinite; /* 应用动画 */
-}
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-10px);
+        position: absolute;
+        bottom: 20px; /* 距离底部 20px */
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 12px;
+        color: #fff;
+        cursor: pointer;
+        /* background: rgba(0, 0, 0, 0.5); */
+        padding: 10px 20px;
+        border-radius: 5px;
     }
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-}
 
-.arrow-down {
-    margin:  0 auto 10px;
-    width: 10px;
-    height: 10px;
-    border: 2px solid #fff;
-    border-left-color: transparent;
-    border-bottom-color: transparent;
-    transform: rotate(135deg);
-}
+    .scroll-down-hint p {
+        margin: 0;
+        opacity: 0; /* 初始透明度为0 */
+        animation: fadeInDown 3s infinite; /* 应用动画 */
+    }
+    @keyframes fadeInDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+
+    .arrow-down {
+        margin:  0 auto 10px;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #fff;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        transform: rotate(135deg);
+    }
     </style>
 </head>
 <body>
     <div class="navbar">
         <h2>创新科技</h2>
         <ul>
-            <li ><a href="#section1" data-menuanchor="page1">首页</a></li>
-            <li ><a href="#section2" data-menuanchor="page2">数据统计</a></li>
-            <li ><a href="#section3" data-menuanchor="page3">产品展示</a></li>
-            <li ><a href="#section4" data-menuanchor="page4">服务流程</a></li>
-            <li ><a href="#section6" data-menuanchor="page6">联系我们</a></li>
-            <li ><a href="#section7" data-menuanchor="page7">合作伙伴</a></li>
+            <li ><a href="#page1" data-menuanchor="page1">首页</a></li>
+            <li ><a href="#page2" data-menuanchor="page2">服务项目</a></li>
+            <li ><a href="#page3" data-menuanchor="page3">产品展示</a></li>
+            <li ><a href="#page4" data-menuanchor="page4">服务流程</a></li>
+            <li ><a href="#page5" data-menuanchor="page5">联系我们</a></li>
+            <li ><a href="#page6" data-menuanchor="page6">合作伙伴</a></li>
         </ul>
     </div>
     <div id="fullpage">
@@ -424,28 +758,54 @@
         <div class="section" id="section1">
             <div class="hero-content-container">
                 <div class="hero-content">
+                    <video id="myVideo" loop muted data-autoplay playsinline>
+                        <source src="./public/flowers.mp4" type="video/mp4">
+                        <source src="./public/flowers.webm" type="video/webm">
+                    </video>
                     <h1 class="animate fade-up">创新科技</h1>
                     <p class="animate fade-up">引领未来发展的先驱者</p>
                 </div>
                 <div class="hero-content">
+                    <video id="myVideo" loop muted data-autoplay playsinline>
+                        <source src="./public/flowers.mp4" type="video/mp4">
+                        <source src="./public/flowers.webm" type="video/webm">
+                    </video>
                     <h1 class="animate fade-up">智能解决方案</h1>
                     <p class="animate fade-up">提供高效、智能的解决方案</p>
                 </div>
                 <div class="hero-content">
+                    <video id="myVideo" loop muted data-autoplay playsinline>
+                        <source src="./public/flowers.mp4" type="video/mp4">
+                        <source src="./public/flowers.webm" type="video/webm">
+                    </video>
                     <h1 class="animate fade-up">卓越服务</h1>
                     <p class="animate fade-up">客户满意度高达 98%</p>
                 </div>
             </div>
+            <div onclick="scrollHeroContent(1)" class="move-left">左滑</div>
             <div class="scroll-down-hint">
-            <p class="slide-tip animate fade-up">滑动查看下一页</p>
-            <div class="arrow-down"></div>
-        </div>
+                <p class="slide-tip animate fade-up">滑动查看下一页</p>
+                <div class="arrow-down"></div>
+            </div>
         </div>
 
         <!-- 新增：数据统计屏 -->
         <div class="section" id="section2">
+            <div class="slide">
+                <div class="box animate shadowFadeIn">Slide 1
+                    <ul class="ol-wrap">
+                        <li class="li-item"></li>
+                        <li class="li-item"></li>
+                        <li class="li-item"></li>
+                        <li class="li-item"></li>
+                    </ul>
+                </div>
+                <div class="solid-wrap animate fadeInBorder"></div>
+            </div>
+            <div class="slide">Slide 2</div>
+            <div class="slide">Slide 3</div>
             <!-- <h2 class="section-title animate fade-up">我们的成就</h2> -->
-            <div class="stats-container">
+            <!-- <div class="stats-container">
                 <div class="stat-item animate fade-up">
                     <div class="stat-number">1000+</div>
                     <div class="stat-label">服务客户</div>
@@ -462,32 +822,67 @@
                     <div class="stat-number">98%</div>
                     <div class="stat-label">客户满意度</div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- 新增：产品展示屏 -->
         <div class="section" id="section3">
             <!-- <h2 class="section-title animate fade-up">产品展示</h2> -->
             <div class="products-grid">
-                <div class="product-card animate fade-left">
+                <div class="product-card animate fade-up">
                     <img src="./src/assets/images/product1.jpg" class="product-image" alt="产品1">
                     <div class="product-info">
-                        <h3>智能产品 A</h3>
-                        <p>革命性的智能解决方案，为您提供极致体验</p>
+                        <div class="title">智能产品 A</div>
+                        <div class="description">革命性的智能解决方案，为您提供极致体验</div>
                     </div>
                 </div>
                 <div class="product-card animate fade-up">
                     <img src="./src/assets/images/product2.jpg" class="product-image" alt="产品2">
                     <div class="product-info">
-                        <h3>智能产品 B</h3>
-                        <p>引领行业标准的创新科技产品</p>
+                        <div class="title">智能产品 B</div>
+                        <div class="description">引领行业标准的创新科技产品</div>
                     </div>
                 </div>
-                <div class="product-card animate fade-right">
+                <div class="product-card animate fade-up">
                     <img src="./src/assets/images/product3.jpg" class="product-image" alt="产品3">
                     <div class="product-info">
-                        <h3>智能产品 C</h3>
-                        <p>为企业定制的专业级解决方案</p>
+                        <div class="title">智能产品 C</div>
+                        <div class="description">为企业定制的专业级解决方案</div>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="./src/assets/images/product1.jpg" class="product-image" alt="产品1">
+                    <div class="product-info">
+                        <div class="title">智能产品 A</div>
+                        <div class="description">革命性的智能解决方案，为您提供极致体验</div>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="./src/assets/images/product2.jpg" class="product-image" alt="产品2">
+                    <div class="product-info">
+                        <div class="title">智能产品 B</div>
+                        <div class="description">引领行业标准的创新科技产品</div>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="./src/assets/images/product3.jpg" class="product-image" alt="产品3">
+                    <div class="product-info">
+                        <div class="title">智能产品 C</div>
+                        <div class="description">为企业定制的专业级解决方案</div>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="./src/assets/images/product1.jpg" class="product-image" alt="产品1">
+                    <div class="product-info">
+                        <div class="title">智能产品 A</div>
+                        <div class="description">革命性的智能解决方案，为您提供极致体验</div>
+                    </div>
+                </div>
+                <div class="product-card animate fade-up">
+                    <img src="./src/assets/images/product2.jpg" class="product-image" alt="产品2">
+                    <div class="product-info">
+                        <div class="title">智能产品 B</div>
+                        <div class="description">引领行业标准的创新科技产品</div>
                     </div>
                 </div>
             </div>
@@ -522,7 +917,28 @@
 
         <!-- 新增：联系我们屏 -->
         <div class="section" id="section6">
-            <div class="contact-container">
+                <div class="contact-wrap">
+                    <div class="contact-list-wrap-body">
+                        <div id="map">
+                        </div>
+                        <div class="contact-cont animate fadeInLeft"></div>
+                        <div class="contact-text animate fade-up">
+                            <div class="head">
+                                <div class="title">
+                                    <div class="animate fade-up">联系我们</div>
+                                    <div class="line"></div></div>
+                                <p class="subtitle">Contact Us</p>
+                            </div>
+                            <ul class="details ulstyle">
+                                <li>中国地区XX分区5A写字楼0-00号</li>
+                                <li class="mark">ADD：Building B1,No.1,Disheng West Road Beijing</li>
+                                <li>官方热线：000-000-0000</li>
+                                <li>email@email.mt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <!-- <div class="contact-container">
                 <div class="contact-info animate fade-left">
                     <h2>联系我们</h2>
                     <p>地址：北京市*******</p>
@@ -540,9 +956,8 @@
                     <div class="form-group">
                         <textarea placeholder="您的留言" rows="4"></textarea>
                     </div>
-                    <button class="submit-btn">发送</button>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- 新增：合作伙伴屏 -->
         <div class="section" id="section7">
@@ -563,24 +978,55 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+<!-- 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script> -->
+    <script src="./public/fullpage.js"></script>
     <script>
         function scrollHeroContent(direction) {
             const container = document.querySelector('.hero-content-container');
             const scrollAmount = container.scrollWidth / container.children.length;
             const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
-            if (direction === 1 && container.scrollLeft >= maxScrollLeft) {
-                container.scrollLeft = 0; // 如果滚动到最右边，回到最左边
-            } else if (direction === -1 && container.scrollLeft <= 0) {
-                container.scrollLeft = maxScrollLeft; // 如果滚动到最左边，跳到最右边
-            } else {
-                container.scrollLeft += direction * scrollAmount;
+            // 计算当前滚动到的索引
+            let currentScrollIndex = Math.round(container.scrollLeft / scrollAmount);
+
+            // 根据方向调整索引
+            if (direction === 1) { // 向右滚动
+                currentScrollIndex = (currentScrollIndex + 1) % container.children.length;
+            } else if (direction === -1) { // 向左滚动
+                currentScrollIndex = (currentScrollIndex - 1 + container.children.length) % container.children.length;
             }
+
+            // 滚动到新的位置
+            container.scrollLeft = currentScrollIndex * scrollAmount;
+
+            // 触发动画
+            const heroContents = container.querySelectorAll('.hero-content');
+            heroContents.forEach((content, index) => {
+                const isActive = index === currentScrollIndex;
+                content.querySelectorAll('.animate').forEach((child) => {
+                    child.classList.remove('active');
+                });
+                if (isActive) {
+                    // 先触发动画效果给 h1
+                    const h1 = content.querySelector('h1');
+                    if (h1) {
+                        setTimeout(() => {
+                            h1.classList.add('active');
+                        }, 800); // 延迟 100 毫秒添加 active 类，确保动画效果
+                    }
+
+                    // 然后触发动画效果给 p
+                    const p = content.querySelector('p');
+                    if (p) {
+                        setTimeout(() => {
+                            p.classList.add('active');
+                        }, 1200); // 在 h1 动画完成后延迟 1200 毫秒添加 active 类，确保动画效果
+                    }
+                }
+            });
         }
 
-        // 自动滚动逻辑
         let autoScrollInterval;
         const autoScrollSpeed = 3000; // 自动滚动的时间间隔（毫秒）
 
@@ -596,52 +1042,65 @@
 
         // 在页面加载时启动自动滚动
         window.onload = () => {
-            startAutoScroll();
+            // startAutoScroll();
         };
 
         // 如果需要在鼠标悬停时停止滚动，可以添加以下事件监听器
         const heroContentContainer = document.querySelector('.hero-content-container');
-        heroContentContainer.addEventListener('mouseenter', stopAutoScroll);
-        heroContentContainer.addEventListener('mouseleave', startAutoScroll);
+        // heroContentContainer.addEventListener('mouseenter', stopAutoScroll);
+        // heroContentContainer.addEventListener('mouseleave', startAutoScroll);
         // 记录已经执行过动画的部分
         const animatedSections = new Set();
         new fullpage('#fullpage', {
-            autoScrolling: true,
-            scrollHorizontally: true,
-            navigation: true,
-            navigationPosition: 'right',
-            scrollingSpeed: 700,
-            anchors: ['page1', 'page2', 'page3', 'page4', 'page6', 'page7'],
-            menu: '.navbar ul',
-            afterLoad: function(origin, destination, direction) {
-                const currentSection = destination.item;
-                const animateElements = currentSection.querySelectorAll('.animate');
-                animateElements.forEach((el, index) => {
-                    el.classList.remove('active');
-                    setTimeout(() => {
-                        el.classList.add('active');
-                    }, index * 200);
-                });
-                // 更新导航栏的 active 样式
-                const links = document.querySelectorAll('.navbar ul li a');
-                links.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-menuanchor') === destination.anchor) {
-                        link.classList.add('active');
-                    }
-                });
-            },
-            onLeave: function(origin, destination, direction) {
-                // 更新导航栏的 active 样式
-                const links = document.querySelectorAll('.navbar ul li a');
-                links.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-menuanchor') === destination.anchor) {
-                        link.classList.add('active');
-                    }
-                });
-            }
+    autoScrolling: true,
+    scrollHorizontally: true,
+    navigation: true,
+    navigationPosition: 'right',
+    scrollingSpeed: 700,
+    anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+    menu: '.navbar ul',
+    afterLoad: function(origin, destination, direction) {
+        const currentSection = destination.item;
+        const animateElements = currentSection.querySelectorAll('.animate');
+        animateElements.forEach((el, index) => {
+            el.classList.remove('active');
+            setTimeout(() => {
+                el.classList.add('active');
+            }, index * 200);
         });
+        console.log("MMMMMMMMMM", destination.anchor)
+
+        // 当滚动到 section2 时触发动画
+        if (destination.anchor === 'page2') {
+            const solidWrap = document.querySelector('.solid-wrap');
+             const box = document.querySelector('.box');
+            setTimeout(() => {
+                box.classList.add('active');
+                solidWrap.classList.add('active');
+            }, 200);
+        }
+
+        if (destination.anchor === 'page5') {
+            const contactCont = document.querySelector('.contact-cont');
+            setTimeout(() => {
+                contactCont.classList.add('active');
+            }, 0);
+        }
+    },
+    onLeave: function(origin, destination, direction) {
+        // 当离开 section2 时重置动画
+        if (origin.anchor === 'page2') {
+            const box = document.querySelector('.box');
+            const solidWrap = document.querySelector('.solid-wrap');
+            box.classList.remove('active');
+            solidWrap.classList.remove('active');
+        }
+        if (destination.anchor === 'page5') {
+            const contactCont = document.querySelector('.contact-cont');
+            contactCont.classList.remove('active');
+        }
+    }
+});
     </script>
 </body>
 </html>
