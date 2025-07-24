@@ -1,80 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Split Layout with Animation</title>
-    <style>
-.contact_list_met_11_1_30.met-page .contact_list_met_11_1_30-body {
-    position: relative;
-    height: 100%;
-}
-#map {
-    width: 100%;
-    height: 80vh;
-    /* top: 0;
-    position: absolute !important; */
-    background: url('./src/assets/images/a.jpg') no-repeat;
-    background-size: cover;
-}
-.contact_list_met_11_1_30.swiper-slide-active .contact-cont {
-    transform: translateX(0);
-}
-.contact_list_met_11_1_30 .contact-cont {
-    position: absolute;
-    bottom: 0;
-    z-index: 8;
-    right: 0;
-    background: transparent;
-    border-bottom: 950px solid;
-    border-color: #ffffff;
-    border-color: #ffffff;
-    border-left: 350px solid transparent;
-    border-right: 0px solid transparent;
-    width: 25%;
-    /* transform: translateX(100%);
-    -webkit-transition: all 0.6s cubic-bezier(0.77,0,0.175,1) 300ms;
-    -moz-transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1) 300ms;
-    -ms-transition: all 0.6s cubic-beziercubic-bezier(0.77, 0, 0.175, 1) 300ms;
-    -o-transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1) 300ms;
-    transition: all 0.6s cubic-bezier(0.77,0,0.175,1) 300ms;
-    transition-duration: 1.2s; */
-}
-.contact_list_met_11_1_30 .contact-text {
-    position: absolute;
-    top: 50%;
-    z-index: 9;
-    width: 25%;
-    text-align: right;
-    right: 80px;
-    transform: translateY(-50%);
-}
-.contact_list_met_11_1_30.swiper-slide-active .contact-text .subtitle {
-    opacity: 1;
-    transform: translateY(0);
-}
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>图表样式示例</title>
+		<style>
+            .news-li {
+                height: 400px;
+                list-style: none;
+                float: left;
+                margin: 0;
+                position: relative;
+                box-sizing: border-box;
+            }
+            .news-li .news-li-item{
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                text-decoration: none;
+            }
+            .news-li .news-li-item:hover .date {
+                color: red!important;
+            }
+            .news-li .news-li-item:hover .title {
+                color: red!important;
+            }
+            .news-li .news-li-item:hover .border-wrap {
+                width: 90%; /* 鼠标悬停时宽度变大 */
+                    height: 90%; /* 鼠标悬停时高度变大 */
+                border-width: 1px;
+            }
+            .news-li .news-li-item .text {
+                position: absolute;
+                width: 100%;
+                background: #ffffff;
+                z-index: 1;
+            }
+            .news-li .news-li-item .text .content .date {
+                font-weight: 300;
+                color: #444444;
+                margin-bottom: 0;
+                display: inline-block;
+                padding: 0 22px;
+                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                padding-left: 0;
+                font-size: 20px;
+            }
+            .news-li .news-li-item .img {
+                position: absolute;
+                width: 100%;
+                height: 50%;
+                 overflow: hidden;
+            }
+            
+            .news-li:nth-child(2n) .news-li-item .img {
+                top: 0;
+                left:0
+            }
+            .news-li:nth-child(2n) .news-li-item .text {
+                left: 0;
+                bottom: 0;
+            }
+            .news-li:nth-child(2n - 1) .news-li-item .img {
+                bottom: 0;
+                left:0
+            }
+            .news-li .news-li-item .border-wrap {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                bottom: 10px;
+                left: 10px;
+                width: 50%;
+                height: 50%;
+                margin: 0 auto;
+                border: 0px solid #fff;
+                z-index: 99999;
+                 transition: width 0.3s ease, height 0.3s ease; /* 添加过渡效果 */
+            }
 
-    </style>
-</head>
-<body>
-   <div class="contact_list_met_11_1_30">
-     <div class="contact_list_met_11_1_30-body">
-        <div id="map">
-        </div>
-        <div class="contact-cont"></div>
-        <div class="contact-text   " m-id="30" m-type="nocontent">
-            <div class="head">
-                <h3 class="title">联系我们<span class="line"></span></h3>
-                <p class="subtitle">Contact Us</p>
-            </div>
-            <ul class="details ulstyle">
-                <li>中国地区XX分区5A写字楼0-00号</li>
-                <li class="mark">ADD：Building B1,No.1,Disheng West Road Beijing</li>
-                <li>官方热线：000-000-0000</li>
-                <li>email@email.mt</li>
-            </ul>
-        </div>
-    </div>
-   </div>
-</body>
+            .news-li:nth-child(2n - 1) .news-li-item .text {
+                left: 0;
+                top: 0;
+            }
+            .img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            @media (max-width: 767px) {
+                .news-li {
+                    width: 50%;
+                }
+                 .news-li .news-li-item .text .content {
+                    padding: 15px;
+                    top: 220px;
+                }
+            }
+            @media (max-width: 991px) {
+                .news-li {
+                    width: 33.333333333333%;
+                }
+                 .news-li .news-li-item .text .content {
+                    padding: 15px;
+                    top: 300px;
+                }
+            }
+            @media (max-width: 1600px) {
+                
+                 .news-li:nth-child(odd) .text .content {
+                    top: 0px;
+                    padding-top: 15px;
+                }
+            }
+            @media (max-width: 1600px) {
+                 .news-li .news-li-item .text .content {
+                    top: 175px;
+                    padding-top: 15px;
+                }
+            }
+            @media (max-width: 1600px) {
+                 .news-li .news-li-item .text .content {
+                    padding: 0 15px;
+                }
+            }
+            @media (max-width: 767px) {
+                .news-li .news-li-item .text .content .title {
+                    margin: 0;
+                    padding-bottom: 7px;
+                }
+            }
+            @media (max-width: 991px) {
+                .news-li .news-li-item .text .content .title {
+                    margin: 0;
+                    padding-bottom: 7px;
+                }
+            }
+            .news-li .news-li-item .text .content .title {
+                margin-bottom: 15px;
+                margin-top: 20px;
+                font-size: 16px;
+                display: inline-block;
+                line-height: 30px;
+                width: 100%;
+                height: 30px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: no-wrap;
+                height: 30px;
+                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+            }
+            @media (max-width: 991px) {
+                .title {
+                    height: auto !important;
+                    font-size: 18px;
+                    padding-bottom: 15px;
+                    line-height: 1.2;
+                }
+            }
+            .title {
+                height: 60px;
+                font-size: 32px;
+                position: relative;
+                margin: 0;
+                font-weight: normal;
+                color: #333333;
+                color: #444444;
+                height: 45px;
+            }
+            @media (max-width: 991px) {
+                .content .description {
+                    margin: 0;
+                }
+            }
+            @media (max-width: 1600px) {
+                .content .description {
+                    height: 55px;
+                }
+            }
+            .content .description {
+                text-decoration: none;
+                text-align: left;
+                color: #444444;
+                line-height: 25px;
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                height: 55px;
+                overflow: hidden;
+                font-size: 13px;
+                overflow: hidden; 
+                display: -webkit-box; 
+                -webkit-line-clamp: 2; 
+                -webkit-box-orient: vertical; 
+                font-size: 13px;
+            }
+            @media (min-width: 768px) and (max-width: 991px) {
+                .news-li {
+                    width: 33.333333333333%; /* 在屏幕宽度在768px到991px之间时，每行显示3个新闻项 */
+                }
+            }
+
+            @media (min-width: 992px) and (max-width: 1599px) {
+                .news-li {
+                    width: 25%; /* 在屏幕宽度在992px到1599px之间时，每行显示4个新闻项 */
+                }
+            }
+
+            @media (min-width: 1600px) {
+                .news-li {
+                    width: 20%; /* 在屏幕宽度大于等于1600px时，每行显示5个新闻项 */
+                }
+            }
+		</style>
+	</head>
+	<body>
+			<ul>
+				<li class="news-li" >
+					<a href="#" class="news-li-item" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。">
+						<div class="text">
+							<div class="content">
+								<p class="date">
+									2018-03-30 </p>
+								<h3 class="title">
+									<span >在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。</span>
+								</h3>
+								<div class="description">伴随着公司的推送，在2017年7月12日，我迎来了在美团点评的**年。在公司的**年，遇到了一些困难，学习到了很多知识，得到了很多人的帮助。文字是有生命力的，总结一下自己过去的正式工作的**年，给自己，也给需要的人。我的**年毕业在即，逃不开的话题就是校园招聘，在校园招聘中斩获了多少，能够让你拥有更多的选择的权利。我的**年回顾的**个主题就是。校招厮杀我本身是一个航海院校计算机相关专业的学生，在</div>
+							</div>
+						</div>
+						<div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+						</div>
+					</a>
+					<a href="#" class="news-more" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。" target="_self" tabindex="0">
+						<i class="icon pe-angle-right"></i>
+					</a>
+				</li>
+                <li class="news-li" >
+					<a href="#" class="news-li-item" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。">
+						<div class="text">
+							<div class="content">
+								<p class="date">
+									2018-03-30 </p>
+								<h3 class="title">
+									<span >在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。</span>
+								</h3>
+								<div class="description">伴随着公司的推送，在2017年7月12日，我迎来了在美团点评的**年。在公司的**年，遇到了一些困难，学习到了很多知识，得到了很多人的帮助。文字是有生命力的，总结一下自己过去的正式工作的**年，给自己，也给需要的人。我的**年毕业在即，逃不开的话题就是校园招聘，在校园招聘中斩获了多少，能够让你拥有更多的选择的权利。我的**年回顾的**个主题就是。校招厮杀我本身是一个航海院校计算机相关专业的学生，在</div>
+							</div>
+						</div>
+						<div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+						</div>
+					</a>
+					<a href="#" class="news-more" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。" target="_self" tabindex="0">
+						<i class="icon pe-angle-right"></i>
+					</a>
+				</li>
+                <li class="news-li" >
+					<a href="#" class="news-li-item" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。">
+						<div class="text">
+							<div class="content">
+								<p class="date">
+									2018-03-30 </p>
+								<h3 class="title">
+									<span >在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。</span>
+								</h3>
+								<div class="description">伴随着公司的推送，在2017年7月12日，我迎来了在美团点评的**年。在公司的**年，遇到了一些困难，学习到了很多知识，得到了很多人的帮助。文字是有生命力的，总结一下自己过去的正式工作的**年，给自己，也给需要的人。我的**年毕业在即，逃不开的话题就是校园招聘，在校园招聘中斩获了多少，能够让你拥有更多的选择的权利。我的**年回顾的**个主题就是。校招厮杀我本身是一个航海院校计算机相关专业的学生，在</div>
+							</div>
+						</div>
+						<div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+						</div>
+					</a>
+					<a href="#" class="news-more" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。" target="_self" tabindex="0">
+						<i class="icon pe-angle-right"></i>
+					</a>
+				</li>
+                <li class="news-li" >
+					<a href="#" class="news-li-item" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。">
+						<div class="text">
+							<div class="content">
+								<p class="date">
+									2018-03-30 </p>
+								<h3 class="title">
+									<span >在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。</span>
+								</h3>
+								<div class="description">伴随着公司的推送，在2017年7月12日，我迎来了在美团点评的**年。在公司的**年，遇到了一些困难，学习到了很多知识，得到了很多人的帮助。文字是有生命力的，总结一下自己过去的正式工作的**年，给自己，也给需要的人。我的**年毕业在即，逃不开的话题就是校园招聘，在校园招聘中斩获了多少，能够让你拥有更多的选择的权利。我的**年回顾的**个主题就是。校招厮杀我本身是一个航海院校计算机相关专业的学生，在</div>
+							</div>
+						</div>
+						<div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+						</div>
+					</a>
+					<a href="#" class="news-more" title="在美团点评当工程师的**年总结，慢慢融入团队后，会迎来一个成长期。" target="_self" tabindex="0">
+						<i class="icon pe-angle-right"></i>
+					</a>
+				</li>
+			</ul>
+	</body>
 </html>

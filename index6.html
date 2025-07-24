@@ -3,86 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continuous Horizontal FullPage Demo</title>
-    <link rel="stylesheet" href="./public/fullpage.css">
-    <style>
-         .product-absolute {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    overflow: hidden;
-}
- .product-absolute .product-full {
-    width: 800px;
-    height: 400px;
-    position: absolute;
-    border: 2000px solid rgba(255, 255, 255, 0.1);
-    box-sizing: content-box;
-    margin: -2175px 0 0 -2400px;
-    background: none;
-    left: 50%;
-    top: 50%;
-    z-index: 991;
-    transition: .5s .6s;
-    -webkit-transition: .5s .6s;
-    -moz-transition: .5s .6s;
-    -ms-transition: .5s .6s;
-    -o-transition: .5s .6s;
-    transform: translate(1350px, 750px);
-    -moz-transform: translate(1350px, 750px);
-    -ms-transform: translate(1350px, 750px);
-    -o-transform: translate(1350px, 750px);
-    -webkit-transform: translate(1350px, 750px);
-    background: rgba(0, 0, 0, 0.18);
-}
- .product-absolute .product-full ol li:nth-child(1) {
-    border-width: 5px 0 0 5px;
-    top: 0;
-    left: 0;
-}
- .product-absolute .product-full ol li {
-    border-color: #444444;
-    border-color: #ffffff;
-    border-style: solid;
-    border-width: 0;
-    position: absolute;
-    width: 24px;
-    height: 24px;
-}
-    </style>
+    <title>Fullscreen Example</title>
 </head>
 <body>
-    <div class="product-absolute">
-        <div class="product-full visible-lg-block">
-            <ol class="list-paddingleft-2"><li><p><br></p></li><li><p><br></p></li><li><p><br></p></li><li><p><br></p></li></ol>
-        </div>
-        <div class="product-border visible-lg-block"></div>
+    <button id="fullscreenBtn">进入全屏</button>
+    <div id="content" style="background-color: lightblue; padding: 20px;">
+        这是一个可以全屏显示的内容区域。
     </div>
-
-    <script src="./public/fullpage.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.16/fullpage.extensions.min.js"></script> -->
     <script>
-        var myFullpage = new fullpage('#fullpage', {
-            continuousHorizontal: true,
-            scrollHorizontally: true,
-            loopHorizontal: true,
-            css3: true,
-            autoScrolling: true,
-            navigation: true,
-            navigationPosition: 'right',
-            slidesNavigation: true,
-            slidesNavPosition: 'bottom',
-            controlArrows: true, // 显示左右控制箭头
-            responsiveWidth: 768,
-            responsiveHeight: 500,
-            lazyLoading: true,
-            credits: {
-                enabled: true,
-                label: 'Made with fullPage.js',
-                position: 'right'
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const content = document.getElementById('content');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                openFullscreen(content);
+            } else {
+                closeFullscreen();
+            }
+        });
+
+        function openFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) { // Firefox
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) { // IE/Edge
+                element.msRequestFullscreen();
+            }
+        }
+
+        function closeFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari, Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+        }
+
+        document.addEventListener("fullscreenchange", function() {
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = "退出全屏";
+            } else {
+                fullscreenBtn.textContent = "进入全屏";
             }
         });
     </script>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>整屏滚动展示</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css">
+    <!-- <link rel="stylesheet" href="./public/examples.css"> -->
     <style>
         * {
             margin: 0;
@@ -13,6 +14,9 @@
         }
         body, html {
             font-family: Arial, sans-serif;
+        }
+        #fp-nav{
+            display: none;
         }
 
         /* 导航栏样式 */
@@ -44,7 +48,7 @@
         .navbar ul li a {
             text-decoration: none;
             color: #333;
-            font-size: 1.2em;
+            font-size: 14px;
         }
 
         .navbar ul li a:hover,
@@ -93,6 +97,15 @@
         #section2 .slide{
             text-align: center;
             color: #fff;
+            position: relative;
+             overflow: hidden;
+        }
+        #section4 {
+            overflow: hidden;
+            background:#f9f9f9;
+        }
+        #section4 .slide{
+            text-align: center;
             position: relative;
              overflow: hidden;
         }
@@ -186,7 +199,7 @@
             }
         }
 
-        .fp-controlArrow {
+        #section2 .fp-controlArrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -200,13 +213,70 @@
             align-items: center;
             transition: transform 0.3s ease;
         }
-        .fp-controlArrow:hover {
+        #section4 .fp-arrow.fp-next,  #section4 .fp-arrow.fp-prev {
+            border-color: transparent;
+        }
+        #section4 .fp-controlArrow {
+            /* position: relative; */
+            top: 80%;
+            border-width: 10px;
+        }
+         #section4 .fp-controlArrow.fp-prev::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border-top: 2px solid #000;
+            border-left: 2px solid #000;
+            transform: rotate(-45deg);
+        }
+        #section4 .fp-controlArrow.fp-next::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border-top: 2px solid #000;
+            border-right: 2px solid #000;
+            transform: rotate(45deg);
+        }
+        #section4 .fp-controlArrow.fp-prev::after{
+            position: absolute;
+            left: -13px;
+            top: -10px;
+            content: "";
+            width: 30px;
+            height: 30px;
+            display: block;
+            border: 1px solid #ccc;
+            
+        }
+        #section4 .fp-controlArrow.fp-next::after{
+            position: absolute;
+            left: -7px;
+            top: -10px;
+            content: "";
+            width: 30px;
+            height: 30px;
+            display: block;
+            border: 1px solid #ccc;
+            
+        }
+        #section4 .fp-controlArrow.fp-prev {
+            position: absolute;
+            left: 48%;
+        }
+        #section4 .fp-controlArrow.fp-next {
+            right:48%;
+        }
+        #section2 .fp-controlArrow:hover {
             transform: translateY(-50%) scale(1.2);
         }
-        .fp-controlArrow.fp-prev {
+        #section2 .fp-controlArrow.fp-prev {
             left: 25%;
         }
-        .fp-controlArrow.fp-next {
+        #section2 .fp-controlArrow.fp-next {
             right:25%;
         }
         .fp-controlArrow::before {
@@ -219,29 +289,27 @@
             top: 50%;
             transform: translateY(-1px); */
         }
-        .fp-controlArrow.fp-prev::before {
+        #section2 .fp-controlArrow.fp-prev::before {
             content: '';
             display: block;
             width: 60px;
             height: 60px;
-            /* background-color: white; */
             position: absolute;
             border-top: 2px solid #fff;
             border-left: 2px solid #fff;
             transform: rotate(-45deg);
         }
-        .fp-controlArrow.fp-next::before {
+        #section2 .fp-controlArrow.fp-next::before {
             content: '';
             display: block;
             width: 60px;
             height: 60px;
-            /* background-color: white; */
             position: absolute;
             border-top: 2px solid #fff;
             border-right: 2px solid #fff;
             transform: rotate(45deg);
         }
-        .fp-bottom{
+        #section2 .fp-bottom{
             display: none;
         }
         #myVideo{
@@ -371,6 +439,7 @@
         }
  
         /* 新增：产品展示区域样式 */
+        
         .products-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -463,7 +532,274 @@
             transform: translateY(100%);
         } */
  
-        /* 新增：服务流程样式 */
+        /* 新增：前沿资讯样式 */
+        #section4 .slide {
+            /* background-color: #2980b9; */
+            /* margin: 0 20px; */
+        }
+        #section4 .head {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .line{
+            position: relative;
+        }
+        .line:before {
+            content: '';
+            position: absolute;
+            left: -45px;
+            top: 50%;
+            background-color: #444444;
+            background-color: #444444;
+            width: 40px;
+            height: 1px;
+            -webkit-transition: all .6s ease;
+            -moz-transition: all .6s ease;
+            -ms-transition: all .6s ease;
+            -o-transition: all .6s ease;
+            transition: all .6s ease;
+        }
+        .line:after {
+            content: '';
+            position: absolute;
+            right: -45px;
+            top: 50%;
+            background-color: #444444;
+            background-color: #444444;
+            width: 40px;
+            height: 1px;
+            -webkit-transition: all .6s ease;
+            -moz-transition: all .6s ease;
+            -ms-transition: all .6s ease;
+            -o-transition: all .6s ease;
+            transition: all .6s ease;
+        }
+        .line:hover::before{
+            width: 20px;
+            left: -25px;
+        }
+        .line:hover::after{
+            width: 20px;
+            right: -25px;
+        }
+
+        .news-li {
+                list-style: none;
+                float: left;
+                margin: 0;
+                position: relative;
+                box-sizing: border-box;
+                height: 300px; 
+                box-sizing: border-box;
+            }
+            .news-li .news-li-item{
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                text-decoration: none;
+            }
+            .news-li .news-li-item:hover .date {
+                color: red!important;
+                transform: translateX(10px);
+            }
+            .news-li .news-li-item:hover .title {
+                color: red!important;
+                transform: translateX(10px);
+            }
+            .news-li .news-li-item:hover .description {
+                transform: translateX(10px);
+            }
+            .news-li .news-li-item:hover .border-wrap {
+                width: 90%; /* 鼠标悬停时宽度变大 */
+                height: 90%; /* 鼠标悬停时高度变大 */
+                border-width: 1px;
+            }
+            .news-li .news-li-item .text {
+                margin-top: 5px;
+                padding: 0 20px 0;
+                position: absolute;
+                width: 100%;
+                background: #ffffff;
+                z-index: 1;
+            }
+
+            .news-li .news-li-item .text .content .date {
+                color: #444444;
+                margin-bottom: 0;
+                display: inline-block;
+                padding: 10px 22px 0;
+                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                padding-left: 0;
+                font-size: 20px;
+            }
+            .news-li .news-li-item .img {
+                position: absolute;
+                width: 100%;
+                height: 50%;
+                 overflow: hidden;
+            }
+            
+            .news-li:nth-child(2n - 1) .news-li-item .img {
+                top: 0;
+                left:0
+            }
+            .news-li:nth-child(2n - 1) .news-li-item .text {
+                left: 0;
+                bottom: 0;
+            }
+            .news-li:nth-child(2n) .news-li-item .img {
+                bottom: 0;
+                left:0
+            }
+            .news-li .news-li-item .border-wrap {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                bottom: 10px;
+                left: 10px;
+                width: 50%;
+                height: 50%;
+                margin: 0 auto;
+                border: 0px solid #fff;
+                z-index: 99999;
+                 transition: width 0.3s ease, height 0.3s ease; /* 添加过渡效果 */
+            }
+
+            .news-li:nth-child(2n) .news-li-item .text {
+                left: 0;
+                top: 0;
+            }
+            .img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            @media (max-width: 767px) {
+                .news-li {
+                    width: 50%;
+                }
+                 .news-li .news-li-item .text .content {
+                    padding: 15px;
+                    top: 220px;
+                }
+            }
+            @media (max-width: 991px) {
+                .news-li {
+                    width: 33.333333333333%;
+                }
+                 .news-li .news-li-item .text .content {
+                    padding: 15px;
+                    top: 300px;
+                }
+            }
+            @media (max-width: 1600px) {
+                
+                 .news-li:nth-child(odd) .text .content {
+                    top: 0px;
+                    padding-top: 15px;
+                }
+            }
+            @media (max-width: 1600px) {
+                 .news-li .news-li-item .text .content {
+                    top: 175px;
+                    padding-top: 15px;
+                }
+            }
+            @media (max-width: 1600px) {
+                 .news-li .news-li-item .text .content {
+                    padding: 0 15px;
+                }
+            }
+            @media (max-width: 767px) {
+                .news-li .news-li-item .text .content .title {
+                    margin: 0;
+                    padding-bottom: 7px;
+                }
+            }
+            @media (max-width: 991px) {
+                .news-li .news-li-item .text .content .title {
+                    margin: 0;
+                    padding-bottom: 7px;
+                }
+            }
+            .news-li .news-li-item .text .content .title {
+                margin-bottom: 13px;
+                margin-top: 11px;
+                font-size: 16px;
+                display: inline-block;
+                line-height: 20px;
+                width: 100%;
+                height: 20px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                color: #444;
+            }
+            @media (max-width: 991px) {
+                .title {
+                    height: auto !important;
+                    font-size: 18px;
+                    padding-bottom: 15px;
+                    line-height: 1.2;
+                }
+            }
+            .title {
+                height: 60px;
+                font-size: 32px;
+                position: relative;
+                margin: 0;
+                font-weight: normal;
+                /* color: #444444; */
+                height: 45px;
+            }
+            @media (max-width: 991px) {
+                .content .description {
+                    margin: 0;
+                }
+            }
+            @media (max-width: 1600px) {
+                .content .description {
+                    height: 55px;
+                }
+            }
+            .content .description {
+                text-decoration: none;
+                text-align: left;
+                color: #444444;
+                line-height: 25px;
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                height: 55px;
+                overflow: hidden;
+                font-size: 13px;
+                overflow: hidden; 
+                display: -webkit-box; 
+                -webkit-line-clamp: 2; 
+                -webkit-box-orient: vertical; 
+                font-size: 13px;
+                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+            }
+            @media (min-width: 768px) and (max-width: 991px) {
+                .news-li {
+                    width: 33.333333333333%; /* 在屏幕宽度在768px到991px之间时，每行显示3个新闻项 */
+                }
+            }
+
+            @media (min-width: 992px) and (max-width: 1599px) {
+                .news-li {
+                    width: 25%; /* 在屏幕宽度在992px到1599px之间时，每行显示4个新闻项 */
+                }
+            }
+
+            @media (min-width: 1600px) {
+                .news-li {
+                    width: 25%; /* 在屏幕宽度大于等于1600px时，每行显示5个新闻项 */
+                }
+            }
         .process-timeline {
             display: flex;
             justify-content: space-between;
@@ -712,6 +1048,7 @@
         /* background: rgba(0, 0, 0, 0.5); */
         padding: 10px 20px;
         border-radius: 5px;
+        z-index: 9999;
     }
 
     .scroll-down-hint p {
@@ -741,16 +1078,17 @@
     }
     </style>
 </head>
-<body>
+<body id="content">
     <div class="navbar">
-        <h2>创新科技</h2>
+        <div>创新科技</div>
         <ul>
             <li ><a href="#page1" data-menuanchor="page1">首页</a></li>
             <li ><a href="#page2" data-menuanchor="page2">服务项目</a></li>
             <li ><a href="#page3" data-menuanchor="page3">产品展示</a></li>
-            <li ><a href="#page4" data-menuanchor="page4">服务流程</a></li>
+            <li ><a href="#page4" data-menuanchor="page4">前沿资讯</a></li>
             <li ><a href="#page5" data-menuanchor="page5">联系我们</a></li>
-            <li ><a href="#page6" data-menuanchor="page6">合作伙伴</a></li>
+            <!-- <li ><a href="#page6" data-menuanchor="page6">合作伙伴</a></li> -->
+            <li ><a href="#" id="fullscreenBtn">进入全屏</a></li>
         </ul>
     </div>
     <div id="fullpage">
@@ -782,7 +1120,7 @@
                     <p class="animate fade-up">客户满意度高达 98%</p>
                 </div>
             </div>
-            <div onclick="scrollHeroContent(1)" class="move-left">左滑</div>
+            <!-- <div onclick="scrollHeroContent(1)" class="move-left">左滑</div> -->
             <div class="scroll-down-hint">
                 <p class="slide-tip animate fade-up">滑动查看下一页</p>
                 <div class="arrow-down"></div>
@@ -827,6 +1165,7 @@
 
         <!-- 新增：产品展示屏 -->
         <div class="section" id="section3">
+            
             <!-- <h2 class="section-title animate fade-up">产品展示</h2> -->
             <div class="products-grid">
                 <div class="product-card animate fade-up">
@@ -888,10 +1227,125 @@
             </div>
         </div>
 
-        <!-- 新增：服务流程屏 -->
+        <!-- 新增：前沿资讯屏 -->
         <div class="section" id="section4">
-            <!-- <h2 class="section-title animate fade-up">服务流程</h2> -->
-            <div class="process-timeline">
+            <div class="slide-container"></div>
+            <div class="slide">
+                <div class="head">
+                    <h3 class="title">**新资讯</h3>
+                    <span class="line">News Introduce</span>
+                </div>
+                <li class="news-li animate fade-up" >
+                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
+                        <div class="text">
+                            <div class="content">
+                                <p class="date">
+                                    2018-03-30 </p>
+                                <h3 class="title">
+                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                </h3>
+                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
+                            </div>
+                        </div>
+                        <div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+                        </div>
+                    </a>
+                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                        <i class="icon pe-angle-right"></i>
+                    </a>
+                </li>
+                <li class="news-li animate fade-up" >
+                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
+                        <div class="text">
+                            <div class="content">
+                                <p class="date">
+                                    2018-03-30 </p>
+                                <h3 class="title">
+                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                </h3>
+                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
+                            </div>
+                        </div>
+                        <div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+                        </div>
+                    </a>
+                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                        <i class="icon pe-angle-right"></i>
+                    </a>
+                </li>
+                <li class="news-li animate fade-up" >
+                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
+                        <div class="text">
+                            <div class="content">
+                                <p class="date">
+                                    2018-03-30 </p>
+                                <h3 class="title">
+                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                </h3>
+                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
+                            </div>
+                        </div>
+                        <div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+                        </div>
+                    </a>
+                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                        <i class="icon pe-angle-right"></i>
+                    </a>
+                </li>
+                <li class="news-li animate fade-up" >
+                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
+                        <div class="text">
+                            <div class="content">
+                                <p class="date">
+                                    2018-03-30 </p>
+                                <h3 class="title">
+                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                </h3>
+                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
+                            </div>
+                        </div>
+                        <div class="img" >
+                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
+                            <div class="border-wrap"></div>
+                            
+                        </div>
+                    </a>
+                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                        <i class="icon pe-angle-right"></i>
+                    </a>
+                </li>
+            </div>
+            <div class="slide">aaaaaaa</div>
+            <div class="slide">bbbb</div>
+            <!-- <div class="slide" id="slide1">
+            <div class="intro">
+                <h1>Slide 2.1</h1>
+            </div>
+        </div>
+        <div class="slide active" id="slide2">
+            <div class="intro">
+                <h1>Slide 2.2</h1>
+                <p>
+                    We are using the class `active` on this section and in this particular horizontal slide. This way it will appear on the viewport on page load, instead of the 1st section 1st slide.
+                </p>
+                <p>You can apply the same logic to horizontal slides</p>
+            </div>
+        </div>
+        <div class="slide" id="slide3">
+            <h1>Slide 2.3</h1>
+        </div> -->
+            
+            <!-- <h2 class="section-title animate fade-up">前沿资讯</h2> -->
+            <!-- <div class="process-timeline">
                 <div class="process-step animate fade-up">
                     <div class="step-number">1</div>
                     <h3>需求分析</h3>
@@ -912,7 +1366,7 @@
                     <h3>售后服务</h3>
                     <p>持续支持，及时响应</p>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- 新增：联系我们屏 -->
@@ -960,8 +1414,7 @@
             </div> -->
         </div>
         <!-- 新增：合作伙伴屏 -->
-        <div class="section" id="section7">
-            <!-- <h2 class="section-title animate fade-up">合作伙伴</h2> -->
+        <!-- <div class="section" id="section7">
             <div class="partners-grid">
                 <div class="partner-logo animate fade-scale">
                     <img src="./src/assets/images/partener1.jpg" alt="合作伙伴1">
@@ -976,7 +1429,7 @@
                     <img src="./src/assets/images/partener4.jpg" alt="合作伙伴4">
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 <!-- 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script> -->
@@ -1042,7 +1495,7 @@
 
         // 在页面加载时启动自动滚动
         window.onload = () => {
-            // startAutoScroll();
+            startAutoScroll();
         };
 
         // 如果需要在鼠标悬停时停止滚动，可以添加以下事件监听器
@@ -1101,6 +1554,49 @@
         }
     }
 });
+
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const content = document.getElementById('content');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                openFullscreen(content);
+            } else {
+                closeFullscreen();
+            }
+        });
+
+        function openFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) { // Firefox
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) { // IE/Edge
+                element.msRequestFullscreen();
+            }
+        }
+
+        function closeFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari, Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+        }
+
+        document.addEventListener("fullscreenchange", function() {
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = "退出全屏";
+            } else {
+                fullscreenBtn.textContent = "进入全屏";
+            }
+        });
     </script>
 </body>
 </html>
