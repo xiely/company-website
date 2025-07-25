@@ -6,1092 +6,1327 @@
     <title>整屏滚动展示</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css"> -->
     <!-- <link rel="stylesheet" href="./public/examples.css"> -->
-     <link rel="stylesheet" href="./public/fullpage.css">
+    <link rel="stylesheet" href="./public/fullpage.css">
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            font-family: Arial, sans-serif;
-        }
-        #fp-nav{
-            display: none;
-        }
-
-        /* 导航栏样式 */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: #333;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .navbar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 15px;
-        }
-
-        .navbar ul li a:hover,
-        .navbar ul li a.active {
-            color: #3498db;
-        }
-
-        .section {
-            color: #333;
-            background: #fff;
-        }
-
-        /* 通用动画类 */
-        .animate {
-            opacity: 0;
-            transition: all 0.8s ease;
-        }
- 
-        .animate.fade-up {
-            transform: translateY(50px);
-        }
- 
-        .animate.fade-left {
-            transform: translateX(-50px);
-        }
- 
-        .animate.fade-right {
-            transform: translateX(50px);
-        }
- 
-        .animate.fade-scale {
-            transform: scale(0.8);
-        }
- 
-        /* 激活动画 */
-        .animate.active {
-            opacity: 1;
-            transform: translate(0) scale(1);
-        }
- 
-        /* 第一屏：Hero区域 */
-        #section2 {
-            background-image: linear-gradient(128deg,#c6d9e7,#6c85f3);
-            overflow: hidden;
-        }
-        #section2 .slide{
-            text-align: center;
-            color: #fff;
-            position: relative;
-             overflow: hidden;
-        }
-        #section4 {
-            overflow: hidden;
-            background:#f9f9f9;
-            scroll-snap-type: y mandatory;
-            overflow-y: auto;
-        }
-        #section4 .slide{
-            text-align: center;
-            position: relative;
-             overflow: hidden;
-        }
-        .box {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 55%;
-            height: 0vh;
-            margin: 0 auto;
-            overflow: hidden;
-            background-color:  rgba(255, 255, 255, 0.1);
-            /* animation: shadowFadeIn 0.8s ease-in-out forwards; */
-        }
-        .ol-wrap .li-item{
-            list-style: none;
-            position: absolute;
-            width: 20px;
-            height: 20px;
-        }
-        .animate.shadowFadeIn.active{
-            animation: shadowFadeIn 0.8s ease-in-out forwards;
-        }
-        @keyframes shadowFadeIn {
-            from {
-                transform: scale(0.5) translate(100%, 100%); /* 初始位置在右下角 */
-                opacity: 0;
-                height: 0;
-            }
-            to {
-                transform: scale(1) translate(0, 0); /* 最终位置在中心 */
-            opacity: 1;
-            height: 70vh;
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
                 }
-            }
-       
-        .ol-wrap .li-item:nth-child(1) {
-            left: 0;
-            top: 0;
-            border-top: 4px solid #fff;
-            border-left: 4px solid #fff;
-        }
-        .ol-wrap .li-item:nth-child(2) {
-            right: 0;
-            top: 0;
-            border-top: 4px solid #fff;
-            border-right: 4px solid #fff;
-        }
-        .ol-wrap .li-item:nth-child(3) {
-            left: 0;
-            bottom: 0;
-            border-left: 4px solid #fff;
-            border-bottom: 4px solid #fff;
-        }
-        .ol-wrap .li-item:nth-child(4) {
-            right: 0;
-            bottom: 0;
-            border-right: 4px solid #fff;
-            border-bottom: 4px solid #fff;
-        }
-        .solid-wrap{
-            position: absolute;
-            left: 27.5%;
-            top: 10%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-             width: 0;
-            height: 0;
-            margin: 0 auto;
-            overflow: hidden;
-            border: 2px dashed #fff; 
-        }
-        .animate.fadeInBorder.active {
-            animation: fadeInBorder 0.5s ease-in-out forwards;
-        }
-        @keyframes fadeInBorder {
-            0% {
-                width: 10%;
-                height: 20vh;
-            }
-           
-            50% {
-                width: 22.5%;
-                height: 40vh;
-            }
-            100% {
-                width: 45%;
-                height: 80vh;
-            }
-        }
-
-        #section2 .fp-controlArrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-        #section4 .fp-arrow.fp-next,  #section4 .fp-arrow.fp-prev {
-            border-color: transparent;
-        }
-        #section4 .fp-controlArrow {
-            /* position: relative; */
-            top: 80%;
-            border-width: 10px;
-        }
-         #section4 .fp-controlArrow.fp-prev::before {
-            content: '';
-            display: block;
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            border-top: 2px solid #000;
-            border-left: 2px solid #000;
-            transform: rotate(-45deg);
-        }
-        #section4 .fp-controlArrow.fp-next::before {
-            content: '';
-            display: block;
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            border-top: 2px solid #000;
-            border-right: 2px solid #000;
-            transform: rotate(45deg);
-        }
-        #section4 .fp-controlArrow.fp-prev::after{
-            position: absolute;
-            left: -13px;
-            top: -10px;
-            content: "";
-            width: 30px;
-            height: 30px;
-            display: block;
-            border: 1px solid #ccc;
-            
-        }
-        #section4 .fp-controlArrow.fp-next::after{
-            position: absolute;
-            left: -7px;
-            top: -10px;
-            content: "";
-            width: 30px;
-            height: 30px;
-            display: block;
-            border: 1px solid #ccc;
-            
-        }
-        #section4 .fp-controlArrow.fp-prev {
-            position: absolute;
-            left: 48%;
-        }
-        #section4 .fp-controlArrow.fp-next {
-            right:48%;
-        }
-        #section2 .fp-controlArrow:hover {
-            transform: translateY(-50%) scale(1.2);
-        }
-        #section2 .fp-controlArrow.fp-prev {
-            left: 25%;
-        }
-        #section2 .fp-controlArrow.fp-next {
-            right:25%;
-        }
-        .fp-controlArrow::before {
-            /* content: '';
-            display: block;
-            width: 20px;
-            height: 2px;
-            background-color: white;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-1px); */
-        }
-        #section2 .fp-controlArrow.fp-prev::before {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            border-top: 2px solid #fff;
-            border-left: 2px solid #fff;
-            transform: rotate(-45deg);
-        }
-        #section2 .fp-controlArrow.fp-next::before {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            border-top: 2px solid #fff;
-            border-right: 2px solid #fff;
-            transform: rotate(45deg);
-        }
-        #section2 .fp-bottom{
-            display: none;
-        }
-        #myVideo{
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            top:0;
-            width: 100%;
-            height: 100%;
-            background-size: 100% 100%;
-            background-color: black; /* in case the video doesn't fit the whole page*/
-            background-image: /* our video */;
-            background-position: center center;
-            background-size: contain;
-            object-fit: cover; /*cover video background */
-            z-index:3;
-        }
- 
-        .hero-content {
-            text-align: center;
-            color: #fff;
-            padding: 0 20px;
-        }
- 
-        .hero-content h1 {
-            position: relative;
-            z-index: 999;
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
- 
-        .hero-content p {
-            position: relative;
-            z-index: 999;
-            font-size: 1.5em;
-            margin-bottom: 30px;
-        }
-        .move-left{
-            position: relative;
-            z-index: 999;
-        }
- 
-        /* 第二屏：产品特性 */
-        .features-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 0 10%;
-        }
- 
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            flex: 1;
-        }
- 
-        /* 第三屏：关于我们 */
-        .about-container {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            padding: 0 10%;
-        }
- 
-        .about-image {
-            flex: 1;
-            border-radius: 20px;
-            overflow: hidden;
-        }
- 
-        .about-image img {
-            width: 100%;
-            height: auto;
-        }
- 
-        .about-content {
-            flex: 1;
-        }
- 
-        /* 第四屏：团队展示 */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            padding: 0 10%;
-        }
- 
-        .team-member {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
- 
-        .team-member img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
- 
-        /* 新增：数据统计区域样式 */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            padding: 0 10%;
-            text-align: center;
-        }
- 
-        .stat-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
- 
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
- 
-        /* 新增：产品展示区域样式 */
+                body, html {
+                    font-family: Arial, sans-serif;
+                }
+                #fp-nav{
+                    display: none;
+                }
         
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            /* gap: 40px; */
-            padding: 0 10%;
-        }
- 
-        .product-card {
-            background: white;
-            /* border-radius: 20px; */
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            position: relative;
-            display: flex; /* 启用 Flexbox 布局 */
-    align-items: center; /* 垂直居中 */
-    justify-content: center; /* 水平居中（如果需要） */
-    flex-direction: column; /* 子元素垂直排列 */
-    height: 250px; /* 确保父容器高度占满整个卡片 */
-        }
- 
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            position: absolute; /* 将图片绝对定位到卡片的顶部 */
+                /* 导航栏样式 */
+                .navbar {
+                    position: fixed;
+                    top: 0;
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.9);
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    z-index: 1000;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+        
+                .navbar h2 {
+                    margin: 0;
+                    font-size: 1.5em;
+                    color: #333;
+                }
+        
+                .navbar ul {
+                    list-style: none;
+                    display: flex;
+                    gap: 20px;
+                }
+        
+                .navbar ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 15px;
+                }
+        
+                .navbar ul li a:hover,
+                .navbar ul li a.active {
+                    color: #3498db;
+                }
+        
+                .section {
+                    color: #333;
+                    background: #fff;
+                }
+        
+                /* 通用动画类 */
+                .animate {
+                    opacity: 0;
+                    transition: all 0.8s ease;
+                }
+         
+                .animate.fade-up {
+                    transform: translateY(250px);
+                }
+        
+                .animate.fade-down {
+                    transform: translateY(-250px);
+                }
+        
+         
+                .animate.fade-left {
+                    transform: translateX(-50px);
+                }
+         
+                .animate.fade-right {
+                    transform: translateX(50px);
+                }
+         
+                .animate.fade-scale {
+                    transform: scale(0.8);
+                }
+         
+                /* 激活动画 */
+                .animate.active {
+                    opacity: 1;
+                    transform: translate(0) scale(1);
+                }
+         
+                /* 第一屏：Hero区域 */
+                #section2 {
+                    background-image: linear-gradient(128deg,#c6d9e7,#6c85f3);
+                    overflow: hidden;
+                }
+                #section2 .slide{
+                    text-align: center;
+                    color: #fff;
+                    position: relative;
+                     overflow: hidden;
+                }
+                #section4 {
+                    overflow: hidden;
+                    background:#f9f9f9;
+                    scroll-snap-type: y mandatory;
+                    overflow-y: auto;
+                }
+                #section4 .slide{
+                    text-align: center;
+                    position: relative;
+                     overflow: hidden;
+                }
+                .box {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 55%;
+                    height: 0vh;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    background-color:  rgba(255, 255, 255, 0.1);
+                    /* animation: shadowFadeIn 0.8s ease-in-out forwards; */
+                }
+                .ol-wrap .li-item{
+                    list-style: none;
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                }
+                .animate.shadowFadeIn.active{
+                    animation: shadowFadeIn 0.8s ease-in-out forwards;
+                }
+                @keyframes shadowFadeIn {
+                    from {
+                        transform: scale(0.5) translate(100%, 100%); /* 初始位置在右下角 */
+                        opacity: 0;
+                        height: 0;
+                    }
+                    to {
+                        transform: scale(1) translate(0, 0); /* 最终位置在中心 */
+                    opacity: 1;
+                    height: 70vh;
+                        }
+                    }
+               
+                .ol-wrap .li-item:nth-child(1) {
+                    left: 0;
+                    top: 0;
+                    border-top: 4px solid #fff;
+                    border-left: 4px solid #fff;
+                }
+                .ol-wrap .li-item:nth-child(2) {
+                    right: 0;
+                    top: 0;
+                    border-top: 4px solid #fff;
+                    border-right: 4px solid #fff;
+                }
+                .ol-wrap .li-item:nth-child(3) {
+                    left: 0;
+                    bottom: 0;
+                    border-left: 4px solid #fff;
+                    border-bottom: 4px solid #fff;
+                }
+                .ol-wrap .li-item:nth-child(4) {
+                    right: 0;
+                    bottom: 0;
+                    border-right: 4px solid #fff;
+                    border-bottom: 4px solid #fff;
+                }
+                .solid-wrap{
+                    position: absolute;
+                    left: 27.5%;
+                    top: 10%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                     width: 0;
+                    height: 0;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    border: 2px dashed #fff; 
+                }
+                .animate.fadeInBorder.active {
+                    animation: fadeInBorder 0.5s ease-in-out forwards;
+                }
+                @keyframes fadeInBorder {
+                    0% {
+                        width: 10%;
+                        height: 20vh;
+                    }
+                   
+                    50% {
+                        width: 22.5%;
+                        height: 40vh;
+                    }
+                    100% {
+                        width: 45%;
+                        height: 80vh;
+                    }
+                }
+        
+                #section2 .fp-controlArrow {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 40px;
+                    height: 40px;
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: transform 0.3s ease;
+                }
+                #section4 .fp-arrow.fp-next,  #section4 .fp-arrow.fp-prev {
+                    border-color: transparent;
+                }
+                #section4 .fp-controlArrow {
+                    /* position: relative; */
+                    top: 80%;
+                    border-width: 10px;
+                }
+                 #section4 .fp-controlArrow.fp-prev::before {
+                    content: '';
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    border-top: 2px solid #000;
+                    border-left: 2px solid #000;
+                    transform: rotate(-45deg);
+                }
+                #section4 .fp-controlArrow.fp-next::before {
+                    content: '';
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    position: absolute;
+                    border-top: 2px solid #000;
+                    border-right: 2px solid #000;
+                    transform: rotate(45deg);
+                }
+                #section4 .fp-controlArrow.fp-prev::after{
+                    position: absolute;
+                    left: -13px;
+                    top: -10px;
+                    content: "";
+                    width: 30px;
+                    height: 30px;
+                    display: block;
+                    border: 1px solid #ccc;
+                    
+                }
+                #section4 .fp-controlArrow.fp-next::after{
+                    position: absolute;
+                    left: -7px;
+                    top: -10px;
+                    content: "";
+                    width: 30px;
+                    height: 30px;
+                    display: block;
+                    border: 1px solid #ccc;
+                    
+                }
+                #section4 .fp-controlArrow.fp-prev {
+                    position: absolute;
+                    left: 48%;
+                }
+                #section4 .fp-controlArrow.fp-next {
+                    right:48%;
+                }
+                #section2 .fp-controlArrow:hover {
+                    transform: translateY(-50%) scale(1.2);
+                }
+                #section2 .fp-controlArrow.fp-prev {
+                    left: 25%;
+                }
+                #section2 .fp-controlArrow.fp-next {
+                    right:25%;
+                }
+                .fp-controlArrow::before {
+                    /* content: '';
+                    display: block;
+                    width: 20px;
+                    height: 2px;
+                    background-color: white;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-1px); */
+                }
+                #section2 .fp-controlArrow.fp-prev::before {
+                    content: '';
+                    display: block;
+                    width: 60px;
+                    height: 60px;
+                    position: absolute;
+                    border-top: 2px solid #fff;
+                    border-left: 2px solid #fff;
+                    transform: rotate(-45deg);
+                }
+                #section2 .fp-controlArrow.fp-next::before {
+                    content: '';
+                    display: block;
+                    width: 60px;
+                    height: 60px;
+                    position: absolute;
+                    border-top: 2px solid #fff;
+                    border-right: 2px solid #fff;
+                    transform: rotate(45deg);
+                }
+                #section2 .fp-bottom{
+                    display: none;
+                }
+                #myVideo{
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    top:0;
+                    width: 100%;
+                    height: 100%;
+                    background-size: 100% 100%;
+                    background-color: black; /* in case the video doesn't fit the whole page*/
+                    background-image: /* our video */;
+                    background-position: center center;
+                    background-size: contain;
+                    object-fit: cover; /*cover video background */
+                    z-index:3;
+                }
+         
+                .hero-content {
+                    text-align: center;
+                    color: #fff;
+                    padding: 0 20px;
+                }
+         
+                .hero-content h1 {
+                    position: relative;
+                    z-index: 999;
+                    font-size: 4em;
+                    margin-bottom: 20px;
+                }
+         
+                .hero-content p {
+                    position: relative;
+                    z-index: 999;
+                    font-size: 1.5em;
+                    margin-bottom: 30px;
+                }
+                .move-left{
+                    position: relative;
+                    z-index: 999;
+                }
+         
+                /* 第二屏：产品特性 */
+                 .strips {
+                    /* min-height: calc(100vh - 60px); */
+                    min-height: 100vh;
+                    text-align: center;
+                    overflow: hidden;
+                    color: white;
+                    position: relative;
+                }
+                .strips__strip {
+                    position: absolute;
+                    width: 20%;
+                    min-height: 100vh;
+                    /* min-height: calc(100vh - 60px); */
+                    overflow: hidden;
+                    cursor: pointer;
+                    z-index: 0;
+                    -webkit-transition: all .5s ease-out;
+                    -moz-transition: all .5s ease-out;
+                    -ms-transition: all .5s ease-out;
+                    -o-transition: all .5s ease-out;
+                    transition: all .5s ease-out;
+                }
+                
+                
+                 .strips .strip__content {
+            background-size: cover;
+            background-position: center;
+                    -webkit-animation-duration: 1s;
+                    animation-duration: 1s;
+                    -webkit-animation-timing-function: cubic-bezier(0.23,1,0.32,1);
+                    animation-timing-function: cubic-bezier(0.23,1,0.32,1);
+                    -webkit-animation-fill-mode: both;
+                    animation-fill-mode: both;
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    text-decoration: none;
+                }
+                .strips .strips__strip:nth-child(1) {
+                    background: url("./src/assets/images/vr游戏.jpg") no-repeat;
+                }
+                .strips .strips__strip:nth-child(1).strips__strip--expanded {
+                    width: 100% !important;
+                    top: 0;
+                    left: 0 !important;
+                    z-index: 9999;
+                    cursor: default;
+                    background: url("./src/assets/images/vr游戏.jpg") no-repeat;
+                    background-size: cover;
+                    background-position: center;
+                }
+                .strips .strips__strip:nth-child(2) {
+                    left: 20%;
+                    background: url("./src/assets/images/vr房产.jpg") no-repeat;
+                }
+                .strips .strips__strip:nth-child(3) {
+                    left: 40%;
+                    background: url("./src/assets/images/vr教育.jpg") no-repeat;
+                }
+                .strips .strips__strip:nth-child(4) {
+                    left: 60%;
+                    background: url("./src/assets/images/vr漫游.jpg") no-repeat;
+                }
+                .strips .strips__strip:nth-child(5) {
+                    left: 80%;
+                    background: url("./src/assets/images/vr医疗.jpg") no-repeat;
+                }
+                .strips .strip__content:before {
+            content: "";
+            position: absolute;
+            z-index: 1;
             top: 0;
             left: 0;
-        }
- 
-        .product-info {
-           position: relative; /* 相对定位，确保内容在图片之上 */
-            z-index: 10; /* 确保内容在图片之上 */
-            color: #fff; /* 文字颜色 */
-            text-align: center; /* 文字水平居中 */
-            padding: 20px; /* 内边距 */
-            
-            width: 100%; /* 宽度占满卡片 */
-            height: 250px; /* 高度自适应内容 */
-            transition: all 0.3s ease; /* 动画效果 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            /* transition: transform 0.3s ease, opacity 0.3s ease; 
-            transform: translateY(100%);  */
-            
-        }
-        .product-info:hover {
-            background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-        }
-        .product-info .title {
-            opacity: 0;
-            font-size: 28px;
-            position: absolute;
-        }
-        .product-info .description {
-             opacity: 0;
-            position: absolute;
-        }
-        .product-card:hover .title{
-            animation: fadeInBottom1 0.5s ease-in-out forwards;
-        }
-        .product-card:hover .description{
-            animation: fadeInBottom2 0.5s ease-in-out forwards;
-            animation-delay: 0.25s;
-        }
-        @keyframes fadeInBottom1 {
-            0% {
-                opacity: 0;
-                bottom: -10%;
-            }
-            100% {
-                opacity: 1;
-                bottom: 50%;
-            }
-        }
-        @keyframes fadeInBottom2 {
-            0% {
-                opacity: 0;
-                bottom: -10%;
-            }
-            100% {
-                opacity: 1;
-                bottom: 38%;
-            }
-        }
-
-        /* .product-card:hover .product-info{
-            opacity: 1; 
-            transform: translateY(100%);
-        } */
- 
-        /* 新增：前沿资讯样式 */
-        #section4 .slide {
-            /* background-color: #2980b9; */
-            /* margin: 0 20px; */
-        }
-        #section4 .head {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .line{
-            position: relative;
-        }
-        .line:before {
-            content: '';
-            position: absolute;
-            left: -45px;
-            top: 50%;
-            background-color: #444444;
-            background-color: #444444;
-            width: 40px;
-            height: 1px;
-            -webkit-transition: all .6s ease;
-            -moz-transition: all .6s ease;
-            -ms-transition: all .6s ease;
-            -o-transition: all .6s ease;
-            transition: all .6s ease;
-        }
-        .line:after {
-            content: '';
-            position: absolute;
-            right: -45px;
-            top: 50%;
-            background-color: #444444;
-            background-color: #444444;
-            width: 40px;
-            height: 1px;
-            -webkit-transition: all .6s ease;
-            -moz-transition: all .6s ease;
-            -ms-transition: all .6s ease;
-            -o-transition: all .6s ease;
-            transition: all .6s ease;
-        }
-        .line:hover::before{
-            width: 20px;
-            left: -25px;
-        }
-        .line:hover::after{
-            width: 20px;
-            right: -25px;
-        }
-
-        .news-li {
-                list-style: none;
-                float: left;
-                margin: 0;
-                position: relative;
-                box-sizing: border-box;
-                height: 400px; 
-                box-sizing: border-box;
-            }
-            .news-li .news-li-item{
-                position: relative;
-                display: inline-block;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                text-decoration: none;
-            }
-            .news-li .news-li-item:hover .date {
-                color: red!important;
-                transform: translateX(10px);
-            }
-            .news-li .news-li-item:hover .title {
-                color: red!important;
-                transform: translateX(10px);
-            }
-            .news-li .news-li-item:hover .description {
-                transform: translateX(10px);
-            }
-            .news-li .news-li-item:hover .border-wrap {
-                width: 90%; /* 鼠标悬停时宽度变大 */
-                height: 90%; /* 鼠标悬停时高度变大 */
-                border-width: 1px;
-            }
-            .news-li .news-li-item .text {
-                margin-top: 5px;
-                padding: 0 20px 0;
-                position: absolute;
-                width: 100%;
-                background: #ffffff;
-                z-index: 1;
-            }
-
-            .news-li .news-li-item .text .content .date {
-                color: #444444;
-                margin-bottom: 0;
-                display: inline-block;
-                padding: 10px 22px 0;
-                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
-                padding-left: 0;
-                font-size: 20px;
-            }
-            .news-li .news-li-item .img {
-                position: absolute;
-                width: 100%;
-                height: 50%;
-                 overflow: hidden;
-            }
-            
-            .news-li:nth-child(2n - 1) .news-li-item .img {
-                top: 0;
-                left:0
-            }
-            .news-li:nth-child(2n - 1) .news-li-item .text {
-                left: 0;
-                bottom: 0;
-            }
-            .news-li:nth-child(2n) .news-li-item .img {
-                bottom: 0;
-                left:0
-            }
-            .news-li .news-li-item .border-wrap {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                bottom: 10px;
-                left: 10px;
-                width: 50%;
-                height: 50%;
-                margin: 0 auto;
-                border: 0px solid #fff;
-                z-index: 99999;
-                 transition: width 0.3s ease, height 0.3s ease; /* 添加过渡效果 */
-            }
-
-            .news-li:nth-child(2n) .news-li-item .text {
-                left: 0;
-                top: 0;
-            }
-            .img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            @media (max-width: 767px) {
-                .news-li {
-                    width: 50%;
-                }
-                 .news-li .news-li-item .text .content {
-                    padding: 15px;
-                    top: 220px;
-                }
-            }
-            @media (max-width: 991px) {
-                .news-li {
-                    width: 33.333333333333%;
-                }
-                 .news-li .news-li-item .text .content {
-                    padding: 15px;
-                    top: 300px;
-                }
-            }
-            @media (max-width: 1600px) {
-                
-                 .news-li:nth-child(odd) .text .content {
-                    top: 0px;
-                    padding-top: 15px;
-                }
-            }
-            @media (max-width: 1600px) {
-                 .news-li .news-li-item .text .content {
-                    top: 175px;
-                    padding-top: 15px;
-                }
-            }
-            @media (max-width: 1600px) {
-                 .news-li .news-li-item .text .content {
-                    padding: 0 15px;
-                }
-            }
-            @media (max-width: 767px) {
-                .news-li .news-li-item .text .content .title {
-                    margin: 0;
-                    padding-bottom: 7px;
-                }
-            }
-            @media (max-width: 991px) {
-                .news-li .news-li-item .text .content .title {
-                    margin: 0;
-                    padding-bottom: 7px;
-                }
-            }
-            .news-li .news-li-item .text .content .title {
-                margin-bottom: 13px;
-                margin-top: 11px;
-                font-size: 16px;
-                display: inline-block;
-                line-height: 20px;
-                width: 100%;
-                height: 20px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
-                color: #444;
-            }
-            @media (max-width: 991px) {
-                .title {
-                    height: auto !important;
-                    font-size: 18px;
-                    padding-bottom: 15px;
-                    line-height: 1.2;
-                }
-            }
-            .title {
-                height: 60px;
-                font-size: 32px;
-                position: relative;
-                margin: 0;
-                font-weight: normal;
-                /* color: #444444; */
-                height: 45px;
-            }
-            @media (max-width: 991px) {
-                .content .description {
-                    margin: 0;
-                }
-            }
-            @media (max-width: 1600px) {
-                .content .description {
-                    height: 55px;
-                }
-            }
-            .content .description {
-                text-decoration: none;
-                text-align: left;
-                color: #444444;
-                line-height: 25px;
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
-                height: 55px;
-                overflow: hidden;
-                font-size: 13px;
-                overflow: hidden; 
-                display: -webkit-box; 
-                -webkit-line-clamp: 2; 
-                -webkit-box-orient: vertical; 
-                font-size: 13px;
-                transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
-            }
-            @media (min-width: 768px) and (max-width: 991px) {
-                .news-li {
-                    width: 33.333333333333%; /* 在屏幕宽度在768px到991px之间时，每行显示3个新闻项 */
-                }
-            }
-
-            @media (min-width: 992px) and (max-width: 1599px) {
-                .news-li {
-                    width: 25%; /* 在屏幕宽度在992px到1599px之间时，每行显示4个新闻项 */
-                }
-            }
-
-            @media (min-width: 1600px) {
-                .news-li {
-                    width: 25%; /* 在屏幕宽度大于等于1600px时，每行显示5个新闻项 */
-                }
-            }
-        .process-timeline {
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10%;
-            position: relative;
-        }
- 
-        .process-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            padding: 20px;
-        }
- 
-        .step-number {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #3498db;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 1.5em;
-        }
- 
-        /* 新增：客户评价样式 */
-        .testimonials-container {
-            display: flex;
-            gap: 30px;
-            padding: 0 10%;
-        }
- 
-        .testimonial-card {
-            flex: 1;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
- 
-        .client-info {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-        }
- 
-        .client-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
- 
-        /* 新增：联系我们样式 */
-        .contact-list-wrap .contact-list-wrap-body {
-            position: relative;
+            width: 100%;
             height: 100%;
-        }
-        #map {
-            width: 100%;
-            height: 100vh;
-            top: 0;
-            position: absolute !important;
-            background: url('./src/assets/images/map.png') no-repeat;
-            background-size: cover;
-        }
-        .contact-wrap .contact-cont {
-            transform: translateX(0);
-        }
-        .contact-wrap .contact-cont {
-            position: absolute;
-            bottom: 0;
-            z-index: 8;
-            right: 0;
-            background: transparent;
-            border-bottom: 950px solid;
-            border-color: #ffffff;
-            border-color: #ffffff;
-            border-left: 350px solid transparent;
-            border-right: 0px solid transparent;
-            /* animation: fadeInLeft 1s ease-in-out forwards;  */
-        }
-        .animate.fadeInLeft.active{
-            animation: fadeInLeft 1s ease-in-out forwards;
-        }
-
-        @keyframes fadeInLeft {
-            0% {
-                width: 0%;
-            }
-            100% {
-                width: 45%;;
-            }
-        }
-        .contact-wrap .contact-text {
-            font-size: 16px;
-            font-weight: thin;
-            position: absolute;
-            top: 50%;
-            z-index: 9;
-            width: 25%;
-            text-align: right;
-            right: 80px;
-            transform: translateY(-50%);
-        }
-        .contact-text .title{
-            font-size: 24px;
-        }
-         .contact-text .line {
-            display: inline-block;
-            width: 100px;
-            height: 1px;
-            background: red;
-            opacity: 1;
-        }
-        .contact-text .title:hover .line {
-            width: 50px;
-
-        }
-        .contact-wrap .contact-text .subtitle {
-            margin-top: 20px;
-            font-size: 20px;
-            opacity: 1;
-            transform: translateY(0);
-            color: #595757;
-        }
-        .contact-text .details {
-            margin-top: 40px;
-        }
-        .details li {
-            list-style: none;
-        }
-        .contact-text .details .mark {
-    position: relative;
-    margin-bottom: 40px;
-    padding-bottom: 5px;
-    font-size: 12px;
-    color: #444444;
-    color: #c4c4c4;
-    background: transparent;
-    padding: 0;
-}
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            padding: 0 10%;
-        }
- 
-        .contact-form {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            opacity: 0.05;
+            -webkit-transform-origin: center center;
+            -ms-transform-origin: center center;
+            transform-origin: center center;
+            -webkit-transform: skew(-30deg) scaleY(1) translate(0, 0);
+            -ms-transform: skew(-30deg) scaleY(1) translate(0, 0);
+            transform: skew(-30deg) scaleY(1) translate(0, 0);
+            -webkit-transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
+            transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
         }
- 
-        .form-group {
-            margin-bottom: 20px;
-        }
- 
-        .form-group input,
-        .form-group textarea {
+         .strips__strip:hover > .strip__content:before{
+            transform: skew(0deg);
+         }
+         .strip__title {
+            display: block;
+            margin: 0;
+            position: relative;
+            z-index: 2;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-top: 5px;
+            font-size: 50px;
+            color: #ffffff;
+            color: #ffffff;
+            -webkit-transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
+            transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
         }
- 
-        /* 新增：合作伙伴样式 */
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            padding: 0 10%;
-        }
- 
-        .partner-logo {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .hero-content-container {
-        display: flex;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        padding: 0 20px;
-    }
-
-    .hero-content {
-        min-width: 100%; /* 确保每个内容占据全屏宽度 */
-        text-align: center;
-        padding: 0 20px;
-        transition: all 1s ease;
-    }
-
-    .hero-content h1 {
-        font-size: 4em;
-        margin-bottom: 20px;
-    }
-
-    .hero-content p {
-        font-size: 1.5em;
-        margin-bottom: 30px;
-    }
-    .hero-scroll-arrows {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-     .hero-scroll-arrows button {
-        background-color: #3498db;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 2em;
-        cursor: pointer;
-        margin: 0 10px;
-    }
-
-    .hero-scroll-arrows button:hover {
-        background-color: #2980b9;
-    }
-    .hero-content-container {
-        display: flex;
-        overflow-x: hidden; /* 修改为隐藏滚动条 */
-        scroll-behavior: smooth;
-        padding: 0 20px;
-    }
-    /* 滑动查看下一页 */
-    .scroll-down-hint {
-        position: absolute;
-        bottom: 20px; /* 距离底部 20px */
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 12px;
-        color: #fff;
-        cursor: pointer;
-        /* background: rgba(0, 0, 0, 0.5); */
-        padding: 10px 20px;
-        border-radius: 5px;
-        z-index: 9999;
-    }
-
-    .scroll-down-hint p {
-        margin: 0;
-        opacity: 0; /* 初始透明度为0 */
-        animation: fadeInDown 3s infinite; /* 应用动画 */
-    }
-    @keyframes fadeInDown {
-        0% {
+        .strips__strip--expanded .strip__title{
             opacity: 0;
-            transform: translateY(-10px);
         }
-        100% {
+        .strips .strip__inner-text {
+            will-change: transform, opacity;
+            position: absolute;
+            z-index: 5;
+            top: auto;
+            left: 15%;
+            width: 70%;
+            opacity: 0;
+            -webkit-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            z-index: 999;
+        }
+        .strips__strip--expanded .strip__inner-text {
             opacity: 1;
-            transform: translateY(0px);
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
         }
-    }
-
-    .arrow-down {
-        margin:  0 auto 10px;
-        width: 10px;
-        height: 10px;
-        border: 2px solid #fff;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
-        transform: rotate(135deg);
-    }
+        
+        .strips .strip__inner-text h4 {
+            font-size: 20px;
+            color: #ffffff;
+            color: #ffffff;
+            margin: 11px 0;
+        }
+         .strips .strip__inner-text p {
+            color: #666666;
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 1em;
+            line-height: 1.5em;
+        }
+        .set_1_btn {
+    color: #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 45px;
+    text-align: center;
+    max-width: 160px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 100%;
+}
+         .Vbtn-1 {
+            background: transparent;
+            text-align: center;
+            transition: all 250ms linear 0s;
+            display: inline-block;
+        }
+        .Vbtn-1 svg {
+    height: 45px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+        .Vbtn-1 rect {
+    fill: none;
+    stroke: #00ffff;
+    stroke-width: 5;
+    stroke-dasharray: 410; /* 设置为矩形的周长 */
+    stroke-dashoffset: 410; /* 设置为矩形的周长 */
+    transition: stroke-dashoffset 0.5s linear;
+}
+.Vbtn-1:hover {
+    color: #00ffff;
+    background: rgba(225, 51, 45, 0);
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+.Vbtn-1:hover rect {
+    stroke-dashoffset: 0; /* 鼠标悬停时，偏移量变为0 */
+  }
+         .strip__close {
+            color: #ffffff;
+            position: absolute;
+            right: 3vw;
+            top: 15vh;
+            opacity: 0;
+            z-index: 10;
+            -webkit-transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
+            transition: all 0.6s cubic-bezier(0.23,1,0.32,1);
+            cursor: pointer;
+            -webkit-transition-delay: 0.5s;
+            transition-delay: 0.5s;
+            font-size: 25px;
+        }
+        .strips__strip--expanded .strip__close {
+            opacity: 1;
+        }
+       
+                .features-container {
+                    display: flex;
+                    justify-content: center;
+                    gap: 30px;
+                    padding: 0 10%;
+                }
+         
+                .feature-card {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    text-align: center;
+                    flex: 1;
+                }
+         
+                /* 第三屏：关于我们 */
+                .about-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 50px;
+                    padding: 0 10%;
+                }
+         
+                .about-image {
+                    flex: 1;
+                    border-radius: 20px;
+                    overflow: hidden;
+                }
+         
+                .about-image img {
+                    width: 100%;
+                    height: auto;
+                }
+         
+                .about-content {
+                    flex: 1;
+                }
+         
+                /* 第四屏：团队展示 */
+                .team-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 30px;
+                    padding: 0 10%;
+                }
+         
+                .team-member {
+                    text-align: center;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
+         
+                .team-member img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    margin-bottom: 15px;
+                }
+         
+                /* 新增：数据统计区域样式 */
+                .stats-container {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 30px;
+                    padding: 0 10%;
+                    text-align: center;
+                }
+         
+                .stat-item {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 30px;
+                    border-radius: 15px;
+                    backdrop-filter: blur(10px);
+                }
+         
+                .stat-number {
+                    font-size: 3em;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    margin-bottom: 10px;
+                }
+         
+                /* 新增：产品展示区域样式 */
+                
+                .products-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    /* gap: 40px; */
+                    padding: 0 10%;
+                }
+         
+                .product-card {
+                    background: white;
+                    /* border-radius: 20px; */
+                    overflow: hidden;
+                    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+                    position: relative;
+                    display: flex; /* 启用 Flexbox 布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中（如果需要） */
+            flex-direction: column; /* 子元素垂直排列 */
+            height: 250px; /* 确保父容器高度占满整个卡片 */
+                }
+         
+                .product-image {
+                    width: 100%;
+                    height: 250px;
+                    object-fit: cover;
+                    position: absolute; /* 将图片绝对定位到卡片的顶部 */
+                    top: 0;
+                    left: 0;
+                }
+         
+                .product-info {
+                   position: relative; /* 相对定位，确保内容在图片之上 */
+                    z-index: 10; /* 确保内容在图片之上 */
+                    color: #fff; /* 文字颜色 */
+                    text-align: center; /* 文字水平居中 */
+                    padding: 20px; /* 内边距 */
+                    
+                    width: 100%; /* 宽度占满卡片 */
+                    height: 250px; /* 高度自适应内容 */
+                    transition: all 0.3s ease; /* 动画效果 */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    /* transition: transform 0.3s ease, opacity 0.3s ease; 
+                    transform: translateY(100%);  */
+                    
+                }
+                .product-info:hover {
+                    background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+                }
+                .product-info .title {
+                    opacity: 0;
+                    font-size: 28px;
+                    position: absolute;
+                }
+                .product-info .description {
+                     opacity: 0;
+                    position: absolute;
+                }
+                .product-card:hover .title{
+                    animation: fadeInBottom1 0.5s ease-in-out forwards;
+                }
+                .product-card:hover .description{
+                    animation: fadeInBottom2 0.5s ease-in-out forwards;
+                    animation-delay: 0.25s;
+                }
+                @keyframes fadeInBottom1 {
+                    0% {
+                        opacity: 0;
+                        bottom: -10%;
+                    }
+                    100% {
+                        opacity: 1;
+                        bottom: 50%;
+                    }
+                }
+                @keyframes fadeInBottom2 {
+                    0% {
+                        opacity: 0;
+                        bottom: -10%;
+                    }
+                    100% {
+                        opacity: 1;
+                        bottom: 38%;
+                    }
+                }
+        
+                /* .product-card:hover .product-info{
+                    opacity: 1; 
+                    transform: translateY(100%);
+                } */
+         
+                /* 新增：前沿资讯样式 */
+                #section4 .slide {
+                    /* background-color: #2980b9; */
+                    /* margin: 0 20px; */
+                }
+                #section4 .head {
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+                .line{
+                    position: relative;
+                }
+                .line:before {
+                    content: '';
+                    position: absolute;
+                    left: -45px;
+                    top: 50%;
+                    background-color: #444444;
+                    background-color: #444444;
+                    width: 40px;
+                    height: 1px;
+                    -webkit-transition: all .6s ease;
+                    -moz-transition: all .6s ease;
+                    -ms-transition: all .6s ease;
+                    -o-transition: all .6s ease;
+                    transition: all .6s ease;
+                }
+                .line:after {
+                    content: '';
+                    position: absolute;
+                    right: -45px;
+                    top: 50%;
+                    background-color: #444444;
+                    background-color: #444444;
+                    width: 40px;
+                    height: 1px;
+                    -webkit-transition: all .6s ease;
+                    -moz-transition: all .6s ease;
+                    -ms-transition: all .6s ease;
+                    -o-transition: all .6s ease;
+                    transition: all .6s ease;
+                }
+                .line:hover::before{
+                    width: 20px;
+                    left: -25px;
+                }
+                .line:hover::after{
+                    width: 20px;
+                    right: -25px;
+                }
+        
+                .news-li {
+                        list-style: none;
+                        float: left;
+                        margin: 0;
+                        position: relative;
+                        box-sizing: border-box;
+                        height: 400px; 
+                        box-sizing: border-box;
+                    }
+                    .news-li .news-li-item{
+                        position: relative;
+                        display: inline-block;
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                        text-decoration: none;
+                    }
+                    .news-li .news-li-item:hover .date {
+                        color: red!important;
+                        transform: translateX(10px);
+                    }
+                    .news-li .news-li-item:hover .title {
+                        color: red!important;
+                        transform: translateX(10px);
+                    }
+                    .news-li .news-li-item:hover .description {
+                        transform: translateX(10px);
+                    }
+                    .news-li .news-li-item:hover .border-wrap {
+                        width: 90%; /* 鼠标悬停时宽度变大 */
+                        height: 90%; /* 鼠标悬停时高度变大 */
+                        border-width: 1px;
+                    }
+                    .news-li .news-li-item .text {
+                        margin-top: 5px;
+                        padding: 0 20px 0;
+                        position: absolute;
+                        width: 100%;
+                        background: #ffffff;
+                        z-index: 1;
+                    }
+        
+                    .news-li .news-li-item .text .content .date {
+                        color: #444444;
+                        margin-bottom: 0;
+                        display: inline-block;
+                        padding: 10px 22px 0;
+                        transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                        padding-left: 0;
+                        font-size: 20px;
+                    }
+                    .news-li .news-li-item .img {
+                        position: absolute;
+                        width: 100%;
+                        height: 50%;
+                         overflow: hidden;
+                    }
+                    
+                    .news-li:nth-child(2n - 1) .news-li-item .img {
+                        top: 0;
+                        left:0
+                    }
+                    .news-li:nth-child(2n - 1) .news-li-item .text {
+                        left: 0;
+                        bottom: 0;
+                    }
+                    .news-li:nth-child(2n) .news-li-item .img {
+                        bottom: 0;
+                        left:0
+                    }
+                    .news-li .news-li-item .border-wrap {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        bottom: 10px;
+                        left: 10px;
+                        width: 50%;
+                        height: 50%;
+                        margin: 0 auto;
+                        border: 0px solid #fff;
+                        z-index: 99999;
+                         transition: width 0.3s ease, height 0.3s ease; /* 添加过渡效果 */
+                    }
+        
+                    .news-li:nth-child(2n) .news-li-item .text {
+                        left: 0;
+                        top: 0;
+                    }
+                    .img img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                    @media (max-width: 767px) {
+                        .news-li {
+                            width: 50%;
+                        }
+                         .news-li .news-li-item .text .content {
+                            padding: 15px;
+                            top: 220px;
+                        }
+                    }
+                    @media (max-width: 991px) {
+                        .news-li {
+                            width: 33.333333333333%;
+                        }
+                         .news-li .news-li-item .text .content {
+                            padding: 15px;
+                            top: 300px;
+                        }
+                    }
+                    @media (max-width: 1600px) {
+                        
+                         .news-li:nth-child(odd) .text .content {
+                            top: 0px;
+                            padding-top: 15px;
+                        }
+                    }
+                    @media (max-width: 1600px) {
+                         .news-li .news-li-item .text .content {
+                            top: 175px;
+                            padding-top: 15px;
+                        }
+                    }
+                    @media (max-width: 1600px) {
+                         .news-li .news-li-item .text .content {
+                            padding: 0 15px;
+                        }
+                    }
+                    @media (max-width: 767px) {
+                        .news-li .news-li-item .text .content .title {
+                            margin: 0;
+                            padding-bottom: 7px;
+                        }
+                    }
+                    @media (max-width: 991px) {
+                        .news-li .news-li-item .text .content .title {
+                            margin: 0;
+                            padding-bottom: 7px;
+                        }
+                    }
+                    .news-li .news-li-item .text .content .title {
+                        margin-bottom: 13px;
+                        margin-top: 11px;
+                        font-size: 16px;
+                        display: inline-block;
+                        line-height: 20px;
+                        width: 100%;
+                        height: 20px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                        color: #444;
+                    }
+                    @media (max-width: 991px) {
+                        .title {
+                            height: auto !important;
+                            font-size: 18px;
+                            padding-bottom: 15px;
+                            line-height: 1.2;
+                        }
+                    }
+                    .title {
+                        height: 60px;
+                        font-size: 32px;
+                        position: relative;
+                        margin: 0;
+                        font-weight: normal;
+                        /* color: #444444; */
+                        height: 45px;
+                    }
+                    @media (max-width: 991px) {
+                        .content .description {
+                            margin: 0;
+                        }
+                    }
+                    @media (max-width: 1600px) {
+                        .content .description {
+                            height: 55px;
+                        }
+                    }
+                    .content .description {
+                        text-decoration: none;
+                        text-align: left;
+                        color: #444444;
+                        line-height: 25px;
+                        margin-left: 0;
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 55px;
+                        overflow: hidden;
+                        font-size: 13px;
+                        overflow: hidden; 
+                        display: -webkit-box; 
+                        -webkit-line-clamp: 2; 
+                        -webkit-box-orient: vertical; 
+                        font-size: 13px;
+                        transition: all 0.3s cubic-bezier(0.215,0.61,0.355,1) 0s;
+                    }
+                    @media (min-width: 768px) and (max-width: 991px) {
+                        .news-li {
+                            width: 33.333333333333%; /* 在屏幕宽度在768px到991px之间时，每行显示3个新闻项 */
+                        }
+                    }
+        
+                    @media (min-width: 992px) and (max-width: 1599px) {
+                        .news-li {
+                            width: 25%; /* 在屏幕宽度在992px到1599px之间时，每行显示4个新闻项 */
+                        }
+                    }
+        
+                    @media (min-width: 1600px) {
+                        .news-li {
+                            width: 25%; /* 在屏幕宽度大于等于1600px时，每行显示5个新闻项 */
+                        }
+                    }
+                .process-timeline {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 10%;
+                    position: relative;
+                }
+         
+                .process-step {
+                    flex: 1;
+                    text-align: center;
+                    position: relative;
+                    padding: 20px;
+                }
+         
+                .step-number {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background: #3498db;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 20px;
+                    font-size: 1.5em;
+                }
+         
+                /* 新增：客户评价样式 */
+                .testimonials-container {
+                    display: flex;
+                    gap: 30px;
+                    padding: 0 10%;
+                }
+         
+                .testimonial-card {
+                    flex: 1;
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                }
+         
+                .client-info {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 20px;
+                }
+         
+                .client-avatar {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    margin-right: 15px;
+                }
+         
+                /* 新增：联系我们样式 */
+                .contact-list-wrap .contact-list-wrap-body {
+                    position: relative;
+                    height: 100%;
+                }
+                #map {
+                    width: 100%;
+                    height: 100vh;
+                    top: 0;
+                    position: absolute !important;
+                    background: url('./src/assets/images/map.png') no-repeat;
+                    background-size: cover;
+                }
+                .contact-wrap .contact-cont {
+                    transform: translateX(0);
+                }
+                .contact-wrap .contact-cont {
+                    position: absolute;
+                    bottom: 0;
+                    z-index: 8;
+                    right: 0;
+                    background: transparent;
+                    border-bottom: 950px solid;
+                    border-color: #ffffff;
+                    border-color: #ffffff;
+                    border-left: 350px solid transparent;
+                    border-right: 0px solid transparent;
+                    /* animation: fadeInLeft 1s ease-in-out forwards;  */
+                }
+                .animate.fadeInLeft.active{
+                    animation: fadeInLeft 1s ease-in-out forwards;
+                }
+        
+                @keyframes fadeInLeft {
+                    0% {
+                        width: 0%;
+                    }
+                    100% {
+                        width: 45%;;
+                    }
+                }
+                .contact-wrap .contact-text {
+                    font-size: 16px;
+                    font-weight: thin;
+                    position: absolute;
+                    top: 50%;
+                    z-index: 9;
+                    width: 25%;
+                    text-align: right;
+                    right: 80px;
+                    transform: translateY(-50%);
+                }
+                .contact-text .title{
+                    font-size: 24px;
+                }
+                 .contact-text .line {
+                    display: inline-block;
+                    width: 100px;
+                    height: 1px;
+                    background: red;
+                    opacity: 1;
+                }
+                .contact-text .title:hover .line {
+                    width: 50px;
+        
+                }
+                .contact-wrap .contact-text .subtitle {
+                    margin-top: 20px;
+                    font-size: 20px;
+                    opacity: 1;
+                    transform: translateY(0);
+                    color: #595757;
+                }
+                .contact-text .details {
+                    margin-top: 40px;
+                }
+                .details li {
+                    list-style: none;
+                }
+                .contact-text .details .mark {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 5px;
+            font-size: 12px;
+            color: #444444;
+            color: #c4c4c4;
+            background: transparent;
+            padding: 0;
+        }
+                .contact-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 50px;
+                    padding: 0 10%;
+                }
+         
+                .contact-form {
+                    background: white;
+                    padding: 40px;
+                    border-radius: 20px;
+                    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+                }
+         
+                .form-group {
+                    margin-bottom: 20px;
+                }
+         
+                .form-group input,
+                .form-group textarea {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    margin-top: 5px;
+                }
+         
+                /* 新增：合作伙伴样式 */
+                .partners-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 30px;
+                    padding: 0 10%;
+                }
+         
+                .partner-logo {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                }
+                .hero-content-container {
+                display: flex;
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                padding: 0 20px;
+            }
+        
+            .hero-content {
+                min-width: 100%; /* 确保每个内容占据全屏宽度 */
+                text-align: center;
+                padding: 0 20px;
+                transition: all 1s ease;
+            }
+        
+            .hero-content h1 {
+                font-size: 4em;
+                margin-bottom: 20px;
+            }
+        
+            .hero-content p {
+                font-size: 1.5em;
+                margin-bottom: 30px;
+            }
+            .hero-scroll-arrows {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+             .hero-scroll-arrows button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 2em;
+                cursor: pointer;
+                margin: 0 10px;
+            }
+        
+            .hero-scroll-arrows button:hover {
+                background-color: #2980b9;
+            }
+            .hero-content-container {
+                display: flex;
+                overflow-x: hidden; /* 修改为隐藏滚动条 */
+                scroll-behavior: smooth;
+                padding: 0 20px;
+            }
+            /* 滑动查看下一页 */
+            .scroll-down-hint {
+                position: absolute;
+                bottom: 20px; /* 距离底部 20px */
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                font-size: 12px;
+                color: #fff;
+                cursor: pointer;
+                /* background: rgba(0, 0, 0, 0.5); */
+                padding: 10px 20px;
+                border-radius: 5px;
+                z-index: 9999;
+            }
+        
+            .scroll-down-hint p {
+                margin: 0;
+                opacity: 0; /* 初始透明度为0 */
+                animation: fadeInDown 3s infinite; /* 应用动画 */
+            }
+            @keyframes fadeInDown {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0px);
+                }
+            }
+        
+            .arrow-down {
+                margin:  0 auto 10px;
+                width: 10px;
+                height: 10px;
+                border: 2px solid #fff;
+                border-left-color: transparent;
+                border-bottom-color: transparent;
+                transform: rotate(135deg);
+            }
     </style>
 </head>
 <body id="content">
     <div class="navbar">
         <div>创新科技</div>
         <ul>
-            <li ><a href="#page1" data-menuanchor="page1">首页</a></li>
-            <li ><a href="#page2" data-menuanchor="page2">服务项目</a></li>
-            <li ><a href="#page3" data-menuanchor="page3">产品展示</a></li>
-            <li ><a href="#page4" data-menuanchor="page4">前沿资讯</a></li>
-            <li ><a href="#page5" data-menuanchor="page5">联系我们</a></li>
+            <li>
+                <a href="#page1" data-menuanchor="page1">首页</a>
+            </li>
+            <li>
+                <a href="#page2" data-menuanchor="page2">服务项目</a>
+            </li>
+            <li>
+                <a href="#page3" data-menuanchor="page3">产品展示</a>
+            </li>
+            <li>
+                <a href="#page4" data-menuanchor="page4">前沿资讯</a>
+            </li>
+            <li>
+                <a href="#page5" data-menuanchor="page5">联系我们</a>
+            </li>
             <!-- <li ><a href="#page6" data-menuanchor="page6">合作伙伴</a></li> -->
-            <li ><a href="#" id="fullscreenBtn">进入全屏</a></li>
+            <li>
+                <a href="#" id="fullscreenBtn">进入全屏</a>
+            </li>
         </ul>
     </div>
     <div id="fullpage">
@@ -1129,10 +1364,111 @@
                 <div class="arrow-down"></div>
             </div>
         </div>
-
         <!-- 新增：数据统计屏 -->
         <div class="section" id="section2">
-            <div class="slide">
+            <section class="strips">
+                <article class="strips__strip animate fade-down">
+                    <div class="strip__content" data-plugin="appear" data-animate="slide-top">
+                        <h2 class="strip__title">VR游戏</h2>
+                        <div class="strip__inner-text" style="background: rgba(0, 0, 0, 0.3);">
+                            <h4>
+                                <span style="font-size: 30px;font-weight: bold;">打造虚幻世界</span>
+                            </h4>
+                            <p> **一步的虚拟现实技术 <br> 创作令人信服的沉浸式体验没有捷径。虚拟现实要求以极高的帧数渲染复杂场景。而我们正是为高端应用——如3A级游戏、电影制作以及逼真的可视化应用——而设计，它完全能够满足虚拟现实的一切需求，为制作面向所有VR平台的内容提供坚实基础——包括个人电脑、主机以及移动设备。 </p>
+                            <div>
+                                <a href="#" class="set_1_btn Vbtn-1" title="<span style='font-size: 30px;font-weight: bold;'>打造虚幻世界</span>" target="_self">
+                                    <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
+                                    </svg>
+                                    <span>查看更多</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-close strip__close">×</i>
+                </article>
+                <article class="strips__strip animate fade-up">
+                    <div class="strip__content" data-plugin="appear" data-animate="slide-top">
+                        <h2 class="strip__title">VR房产</h2>
+                        <div class="strip__inner-text" style="background: rgba(0, 0, 0, 0.3);">
+                            <h4>
+                                <span style="font-size: 30px;font-weight: bold;">打造虚幻世界</span>
+                            </h4>
+                            <p> **一步的虚拟现实技术 <br> 创作令人信服的沉浸式体验没有捷径。虚拟现实要求以极高的帧数渲染复杂场景。而我们正是为高端应用——如3A级游戏、电影制作以及逼真的可视化应用——而设计，它完全能够满足虚拟现实的一切需求，为制作面向所有VR平台的内容提供坚实基础——包括个人电脑、主机以及移动设备。 </p>
+                            <div>
+                                <a href="#" class="set_1_btn Vbtn-1" title="<span style='font-size: 30px;font-weight: bold;'>打造虚幻世界</span>" target="_self">
+                                    <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
+                                    </svg>
+                                    <span>查看更多</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-close strip__close">×</i>
+                </article>
+                <article class="strips__strip animate fade-down">
+                    <div class="strip__content" data-plugin="appear" data-animate="slide-top">
+                        <h2 class="strip__title">VR教育</h2>
+                        <div class="strip__inner-text" style="background: rgba(0, 0, 0, 0.3);">
+                            <h4>
+                                <span style="font-size: 30px;font-weight: bold;">打造虚幻世界</span>
+                            </h4>
+                            <p> **一步的虚拟现实技术 <br> 创作令人信服的沉浸式体验没有捷径。虚拟现实要求以极高的帧数渲染复杂场景。而我们正是为高端应用——如3A级游戏、电影制作以及逼真的可视化应用——而设计，它完全能够满足虚拟现实的一切需求，为制作面向所有VR平台的内容提供坚实基础——包括个人电脑、主机以及移动设备。 </p>
+                            <div>
+                                <a href="#" class="set_1_btn Vbtn-1" title="<span style='font-size: 30px;font-weight: bold;'>打造虚幻世界</span>" target="_self">
+                                    <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
+                                    </svg>
+                                    <span>查看更多</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-close strip__close">×</i>
+                </article>
+                <article class="strips__strip animate fade-up">
+                    <div class="strip__content" data-plugin="appear" data-animate="slide-top">
+                        <h2 class="strip__title">VR漫游</h2>
+                        <div class="strip__inner-text" style="background: rgba(0, 0, 0, 0.3);">
+                            <h4>
+                                <span style="font-size: 30px;font-weight: bold;">打造虚幻世界</span>
+                            </h4>
+                            <p> **一步的虚拟现实技术 <br> 创作令人信服的沉浸式体验没有捷径。虚拟现实要求以极高的帧数渲染复杂场景。而我们正是为高端应用——如3A级游戏、电影制作以及逼真的可视化应用——而设计，它完全能够满足虚拟现实的一切需求，为制作面向所有VR平台的内容提供坚实基础——包括个人电脑、主机以及移动设备。 </p>
+                            <div>
+                                <a href="#" class="set_1_btn Vbtn-1" title="<span style='font-size: 30px;font-weight: bold;'>打造虚幻世界</span>" target="_self">
+                                    <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
+                                    </svg>
+                                    <span>查看更多</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-close strip__close">×</i>
+                </article>
+                <article class="strips__strip animate fade-down">
+                    <div class="strip__content" data-plugin="appear" data-animate="slide-top">
+                        <h2 class="strip__title">VR医疗</h2>
+                        <div class="strip__inner-text" style="background: rgba(0, 0, 0, 0.3);">
+                            <h4>
+                                <span style="font-size: 30px;font-weight: bold;">打造虚幻世界</span>
+                            </h4>
+                            <p> **一步的虚拟现实技术 <br> 创作令人信服的沉浸式体验没有捷径。虚拟现实要求以极高的帧数渲染复杂场景。而我们正是为高端应用——如3A级游戏、电影制作以及逼真的可视化应用——而设计，它完全能够满足虚拟现实的一切需求，为制作面向所有VR平台的内容提供坚实基础——包括个人电脑、主机以及移动设备。 </p>
+                            <div>
+                                <a href="#" class="set_1_btn Vbtn-1" title="<span style='font-size: 30px;font-weight: bold;'>打造虚幻世界</span>" target="_self">
+                                    <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"></rect>
+                                    </svg>
+                                    <span>查看更多</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-close strip__close">×</i>
+                </article>
+            </section>
+            <!-- <div class="slide">
                 <div class="box animate shadowFadeIn">Slide 1
                     <ul class="ol-wrap">
                         <li class="li-item"></li>
@@ -1144,31 +1480,10 @@
                 <div class="solid-wrap animate fadeInBorder"></div>
             </div>
             <div class="slide">Slide 2</div>
-            <div class="slide">Slide 3</div>
-            <!-- <h2 class="section-title animate fade-up">我们的成就</h2> -->
-            <!-- <div class="stats-container">
-                <div class="stat-item animate fade-up">
-                    <div class="stat-number">1000+</div>
-                    <div class="stat-label">服务客户</div>
-                </div>
-                <div class="stat-item animate fade-up">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">合作伙伴</div>
-                </div>
-                <div class="stat-item animate fade-up">
-                    <div class="stat-number">200+</div>
-                    <div class="stat-label">完成项目</div>
-                </div>
-                <div class="stat-item animate fade-up">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">客户满意度</div>
-                </div>
-            </div> -->
+            <div class="slide">Slide 3</div> -->
         </div>
-
         <!-- 新增：产品展示屏 -->
         <div class="section" id="section3">
-            
             <!-- <h2 class="section-title animate fade-up">产品展示</h2> -->
             <div class="products-grid">
                 <div class="product-card animate fade-up">
@@ -1229,7 +1544,6 @@
                 </div>
             </div>
         </div>
-
         <!-- 新增：前沿资讯屏 -->
         <div class="section" id="section4">
             <div class="slide-container"></div>
@@ -1238,88 +1552,80 @@
                     <h3 class="title">**新资讯</h3>
                     <span class="line">News Introduce</span>
                 </div>
-                <li class="news-li animate fade-up" >
+                <li class="news-li animate fade-up">
                     <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
                         <div class="text">
                             <div class="content">
-                                <p class="date">
-                                    2018-03-30 </p>
+                                <p class="date"> 2018-03-30 </p>
                                 <h3 class="title">
-                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
                                 </h3>
                                 <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
                             </div>
                         </div>
-                        <div class="img" >
+                        <div class="img">
                             <img src="./src/assets/images/product.jpg" alt="新闻图片">
                             <div class="border-wrap"></div>
-                            
                         </div>
                     </a>
                     <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
                         <i class="icon pe-angle-right"></i>
                     </a>
                 </li>
-                <li class="news-li animate fade-up" >
+                <li class="news-li animate fade-up">
                     <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
                         <div class="text">
                             <div class="content">
-                                <p class="date">
-                                    2018-03-30 </p>
+                                <p class="date"> 2018-03-30 </p>
                                 <h3 class="title">
-                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
                                 </h3>
                                 <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
                             </div>
                         </div>
-                        <div class="img" >
+                        <div class="img">
                             <img src="./src/assets/images/product.jpg" alt="新闻图片">
                             <div class="border-wrap"></div>
-                            
                         </div>
                     </a>
                     <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
                         <i class="icon pe-angle-right"></i>
                     </a>
                 </li>
-                <li class="news-li animate fade-up" >
+                <li class="news-li animate fade-up">
                     <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
                         <div class="text">
                             <div class="content">
-                                <p class="date">
-                                    2018-03-30 </p>
+                                <p class="date"> 2018-03-30 </p>
                                 <h3 class="title">
-                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
                                 </h3>
                                 <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
                             </div>
                         </div>
-                        <div class="img" >
+                        <div class="img">
                             <img src="./src/assets/images/product.jpg" alt="新闻图片">
                             <div class="border-wrap"></div>
-                            
                         </div>
                     </a>
                     <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
                         <i class="icon pe-angle-right"></i>
                     </a>
                 </li>
-                <li class="news-li animate fade-up" >
+                <li class="news-li animate fade-up">
                     <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
                         <div class="text">
                             <div class="content">
-                                <p class="date">
-                                    2018-03-30 </p>
+                                <p class="date"> 2018-03-30 </p>
                                 <h3 class="title">
-                                    <span >数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
                                 </h3>
                                 <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
                             </div>
                         </div>
-                        <div class="img" >
+                        <div class="img">
                             <img src="./src/assets/images/product.jpg" alt="新闻图片">
                             <div class="border-wrap"></div>
-                            
                         </div>
                     </a>
                     <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
@@ -1346,7 +1652,6 @@
         <div class="slide" id="slide3">
             <h1>Slide 2.3</h1>
         </div> -->
-            
             <!-- <h2 class="section-title animate fade-up">前沿资讯</h2> -->
             <!-- <div class="process-timeline">
                 <div class="process-step animate fade-up">
@@ -1371,30 +1676,30 @@
                 </div>
             </div> -->
         </div>
-
         <!-- 新增：联系我们屏 -->
         <div class="section" id="section6">
-                <div class="contact-wrap">
-                    <div class="contact-list-wrap-body">
-                        <div id="map">
-                        </div>
-                        <div class="contact-cont animate fadeInLeft"></div>
-                        <div class="contact-text animate fade-up">
-                            <div class="head">
-                                <div class="title">
-                                    <div class="animate fade-up">联系我们</div>
-                                    <div class="line"></div></div>
-                                <p class="subtitle">Contact Us</p>
+            <div class="contact-wrap">
+                <div class="contact-list-wrap-body">
+                    <div id="map">
+                    </div>
+                    <div class="contact-cont animate fadeInLeft"></div>
+                    <div class="contact-text animate fade-up">
+                        <div class="head">
+                            <div class="title">
+                                <div class="animate fade-up">联系我们</div>
+                                <div class="line"></div>
                             </div>
-                            <ul class="details ulstyle">
-                                <li>中国地区XX分区5A写字楼0-00号</li>
-                                <li class="mark">ADD：Building B1,No.1,Disheng West Road Beijing</li>
-                                <li>官方热线：000-000-0000</li>
-                                <li>email@email.mt</li>
-                            </ul>
+                            <p class="subtitle">Contact Us</p>
                         </div>
+                        <ul class="details ulstyle">
+                            <li>中国地区XX分区5A写字楼0-00号</li>
+                            <li class="mark">ADD：Building B1,No.1,Disheng West Road Beijing</li>
+                            <li>官方热线：000-000-0000</li>
+                            <li>email@email.mt</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
             <!-- <div class="contact-container">
                 <div class="contact-info animate fade-left">
                     <h2>联系我们</h2>
@@ -1434,7 +1739,7 @@
             </div>
         </div> -->
     </div>
-<!-- 
+    <!-- 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script> -->
     <script src="./public/fullpage.js"></script>
     <script>
@@ -1500,7 +1805,7 @@
         window.onload = () => {
             startAutoScroll();
         };
-
+        
         // 如果需要在鼠标悬停时停止滚动，可以添加以下事件监听器
         const heroContentContainer = document.querySelector('.hero-content-container');
         // heroContentContainer.addEventListener('mouseenter', stopAutoScroll);
@@ -1508,59 +1813,59 @@
         // 记录已经执行过动画的部分
         const animatedSections = new Set();
         new fullpage('#fullpage', {
-    autoScrolling: true,
-    scrollHorizontally: true,
-    navigation: true,
-    navigationPosition: 'right',
-    scrollingSpeed: 700,
-    anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
-    menu: '.navbar ul',
-    afterLoad: function(origin, destination, direction) {
-        const currentSection = destination.item;
-        const animateElements = currentSection.querySelectorAll('.animate');
-        animateElements.forEach((el, index) => {
-            el.classList.remove('active');
-            setTimeout(() => {
-                el.classList.add('active');
-            }, index * 200);
+            autoScrolling: true,
+            scrollHorizontally: true,
+            navigation: true,
+            navigationPosition: 'right',
+            scrollingSpeed: 700,
+            anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+            menu: '.navbar ul',
+            afterLoad: function(origin, destination, direction) {
+                const currentSection = destination.item;
+                const animateElements = currentSection.querySelectorAll('.animate');
+                animateElements.forEach((el, index) => {
+                    el.classList.remove('active');
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, (index + 1) * 200);
+                });
+                console.log("MMMMMMMMMM", destination.anchor)
+        
+                // 当滚动到 section2 时触发动画
+                if (destination.anchor === 'page2') {
+                    const solidWrap = document.querySelector('.solid-wrap');
+                     const box = document.querySelector('.box');
+                    setTimeout(() => {
+                        box && box.classList.add('active');
+                        solidWrap && solidWrap.classList.add('active');
+                    }, 200);
+                }
+        
+                if (destination.anchor === 'page5') {
+                    const contactCont = document.querySelector('.contact-cont');
+                    setTimeout(() => {
+                        contactCont && contactCont.classList.add('active');
+                    }, 0);
+                }
+            },
+            onLeave: function(origin, destination, direction) {
+                // 当离开 section2 时重置动画
+                if (origin.anchor === 'page2') {
+                    const box = document.querySelector('.box');
+                    const solidWrap = document.querySelector('.solid-wrap');
+                    box && box.classList.remove('active');
+                    solidWrap && solidWrap.classList.remove('active');
+                }
+                if (destination.anchor === 'page5') {
+                    const contactCont = document.querySelector('.contact-cont');
+                    contactCont && contactCont.classList.remove('active');
+                }
+            }
         });
-        console.log("MMMMMMMMMM", destination.anchor)
-
-        // 当滚动到 section2 时触发动画
-        if (destination.anchor === 'page2') {
-            const solidWrap = document.querySelector('.solid-wrap');
-             const box = document.querySelector('.box');
-            setTimeout(() => {
-                box.classList.add('active');
-                solidWrap.classList.add('active');
-            }, 200);
-        }
-
-        if (destination.anchor === 'page5') {
-            const contactCont = document.querySelector('.contact-cont');
-            setTimeout(() => {
-                contactCont.classList.add('active');
-            }, 0);
-        }
-    },
-    onLeave: function(origin, destination, direction) {
-        // 当离开 section2 时重置动画
-        if (origin.anchor === 'page2') {
-            const box = document.querySelector('.box');
-            const solidWrap = document.querySelector('.solid-wrap');
-            box.classList.remove('active');
-            solidWrap.classList.remove('active');
-        }
-        if (destination.anchor === 'page5') {
-            const contactCont = document.querySelector('.contact-cont');
-            contactCont.classList.remove('active');
-        }
-    }
-});
-
-const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
         const content = document.getElementById('content');
-
+        
         fullscreenBtn.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 openFullscreen(content);
@@ -1600,6 +1905,23 @@ const fullscreenBtn = document.getElementById('fullscreenBtn');
                 fullscreenBtn.textContent = "进入全屏";
             }
         });
+
+        // 第二屏事件
+        document.addEventListener('DOMContentLoaded', function() {
+        const strips = document.querySelectorAll('.strips__strip');
+        strips.forEach(strip => {
+            strip.addEventListener('click', function() {
+                console.log("11111111111")
+                strip.classList.add("strips__strip--expanded")
+                const close = strip.querySelector('.strip__close');
+                close.addEventListener("click", function(event) {
+                    console.log("MMMMMMMMMMMMMMMMMMM")
+                    strip.classList.remove("strips__strip--expanded");
+                    event.stopPropagation();
+                }, false);
+            });
+        });
+    });
     </script>
 </body>
 </html>
