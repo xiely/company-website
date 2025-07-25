@@ -416,16 +416,7 @@
                 .strips .strips__strip:nth-child(1) {
                     background: url("./src/assets/images/vr游戏.jpg") no-repeat;
                 }
-                .strips .strips__strip:nth-child(1).strips__strip--expanded {
-                    width: 100% !important;
-                    top: 0;
-                    left: 0 !important;
-                    z-index: 9999;
-                    cursor: default;
-                    background: url("./src/assets/images/vr游戏.jpg") no-repeat;
-                    background-size: cover;
-                    background-position: center;
-                }
+                
                 .strips .strips__strip:nth-child(2) {
                     left: 20%;
                     background: url("./src/assets/images/vr房产.jpg") no-repeat;
@@ -441,6 +432,36 @@
                 .strips .strips__strip:nth-child(5) {
                     left: 80%;
                     background: url("./src/assets/images/vr医疗.jpg") no-repeat;
+                }
+                .strips .strips__strip.strips__strip--expanded {
+                    width: 100% !important;
+                    top: 0;
+                    left: 0 !important;
+                    z-index: 9999;
+                    cursor: default;
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+                .strips .strips__strip:nth-child(1).strips__strip--expanded {
+                    background-image: url("./src/assets/images/vr游戏.jpg");
+                    
+                }
+                .strips .strips__strip:nth-child(2).strips__strip--expanded {
+                    background-image: url("./src/assets/images/vr房产.jpg");
+                    
+                }
+                .strips .strips__strip:nth-child(3).strips__strip--expanded {
+                    background-image: url("./src/assets/images/vr教育.jpg");
+                    
+                }
+                .strips .strips__strip:nth-child(4).strips__strip--expanded {
+                    background-image: url("./src/assets/images/vr漫游.jpg");
+                    
+                }
+                .strips .strips__strip:nth-child(5).strips__strip--expanded {
+                    background-image: url("./src/assets/images/vr医疗.jpg");
+                    
                 }
                 .strips .strip__content:before {
             content: "";
@@ -548,8 +569,7 @@
     fill: none;
     stroke: #00ffff;
     stroke-width: 5;
-    stroke-dasharray: 410; /* 设置为矩形的周长 */
-    stroke-dashoffset: 410; /* 设置为矩形的周长 */
+    
     transition: stroke-dashoffset 0.5s linear;
 }
 .Vbtn-1:hover {
@@ -557,9 +577,12 @@
     background: rgba(225, 51, 45, 0);
     font-weight: 900;
     letter-spacing: 1px;
+
 }
 .Vbtn-1:hover rect {
-    stroke-dashoffset: 0; /* 鼠标悬停时，偏移量变为0 */
+    /* stroke-dasharray: 320; 
+    stroke-dashoffset: 320;  */
+    /* stroke-dashoffset: 0; */
   }
          .strip__close {
             color: #ffffff;
