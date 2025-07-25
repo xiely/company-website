@@ -22,6 +22,7 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+    background: transparent;
   }
   .Vbtn-1 {
     background: transparent;
@@ -41,12 +42,13 @@
     fill: none;
     stroke: #00ffff;
     stroke-width: 5;
-    stroke-dasharray: 410; /* 设置为矩形的周长 */
-    stroke-dashoffset: 410; /* 设置为矩形的周长 */
+    stroke-dashoffset: 0; /* 鼠标悬停时，偏移量变为0 */
+    
     transition: stroke-dashoffset 0.5s linear;
   }
   .Vbtn-1:hover rect {
-    stroke-dashoffset: 0; /* 鼠标悬停时，偏移量变为0 */
+    stroke-dasharray: 390; /* 设置为矩形的周长 */
+    stroke-dashoffset: 390; /* 设置为矩形的周长 */
   }
   .Vbtn-1 span {
     position: relative;
