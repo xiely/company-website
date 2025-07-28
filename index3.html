@@ -37,6 +37,7 @@
 
     .navbar .logo-wrap {
         height: 54px;
+        line-height: 54px;
     }
 
     .navbar .logo-wrap img {
@@ -123,6 +124,11 @@
         background-image: linear-gradient(128deg, #c6d9e7, #6c85f3);
         overflow: hidden;
     }
+    .aaaa {
+        width: 90%;
+        /* background: url("./src/assets/images/product.jpg") no-repeat; */
+        background-size: contain;
+    }
 
     #section2 .slide {
         text-align: center;
@@ -132,6 +138,8 @@
     }
 
     #section4 {
+        margin-top: 70px;
+        position: relative;
         overflow: hidden;
         scroll-snap-type: y mandatory;
         overflow-y: auto;
@@ -904,6 +912,7 @@
     }
 
     #section4 .head {
+        padding-top: 180px;
         text-align: center;
         margin-bottom: 10px;
     }
@@ -963,6 +972,10 @@
         height: 400px;
         box-sizing: border-box;
         background-color: #f9f9f9;
+        padding: 10px 0;
+    }
+    .news-li a {
+        text-decoration: none;
     }
 
     .news-li .news-li-item {
@@ -1120,7 +1133,7 @@
         }
     }
 
-    .news-li .news-li-item .text .content .title {
+    .news-li  .text .content .title {
         margin-bottom: 13px;
         margin-top: 11px;
         font-size: 16px;
@@ -1144,15 +1157,14 @@
         }
     }
 
-    .title {
+    /* .title {
         height: 60px;
         font-size: 32px;
         position: relative;
         margin: 0;
         font-weight: normal;
-        /* color: #444444; */
         height: 45px;
-    }
+    } */
 
     @media (max-width: 991px) {
         .content .description {
@@ -1514,7 +1526,8 @@
 <body id="content">
     <div class="navbar">
         <div class="logo-wrap">
-            <img src="./src/assets/images/logo.png" alt="">
+            <div>航天云机</div>
+            <!-- <img src="./src/assets/images/logo.png" alt=""> -->
         </div>
         <ul>
             <li>
@@ -1755,135 +1768,196 @@
         </div>
         <!-- 新增：前沿资讯屏 -->
         <div class="section" id="section4">
-            <div class="slide-container"></div>
-            <div class="slide">
-                <div class="head">
-                    <h3 class="title">**新资讯</h3>
-                    <span class="line">News Introduce</span>
+            <section class="text-xs-center met-page swiper-slide-active">
+                <div class="container slide">
+                    <div class="head">
+                        <h3 class="title">**新资讯</h3>
+                        <span class="line">News Introduce</span>
+                    </div>
+                    <div class="news-content">
+                            <ul class="news-ul">
+                                <div class="slick-list draggable">
+                                    <div class="slick-track" role="listbox">
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </ul>
+                    </div>
                 </div>
-                <li class="news-li animate fade-up">
-                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
-                        <div class="text">
-                            <div class="content">
-                                <p class="date"> 2018-03-30 </p>
-                                <h3 class="title">
-                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
-                                </h3>
-                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
-                            </div>
-                        </div>
-                        <div class="img">
-                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
-                            <div class="border-wrap"></div>
-                        </div>
-                    </a>
-                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
-                        <i class="icon pe-angle-right"></i>
-                    </a>
-                </li>
-                <li class="news-li animate fade-up">
-                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
-                        <div class="text">
-                            <div class="content">
-                                <p class="date"> 2018-03-30 </p>
-                                <h3 class="title">
-                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
-                                </h3>
-                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
-                            </div>
-                        </div>
-                        <div class="img">
-                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
-                            <div class="border-wrap"></div>
-                        </div>
-                    </a>
-                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
-                        <i class="icon pe-angle-right"></i>
-                    </a>
-                </li>
-                <li class="news-li animate fade-up">
-                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
-                        <div class="text">
-                            <div class="content">
-                                <p class="date"> 2018-03-30 </p>
-                                <h3 class="title">
-                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
-                                </h3>
-                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
-                            </div>
-                        </div>
-                        <div class="img">
-                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
-                            <div class="border-wrap"></div>
-                        </div>
-                    </a>
-                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
-                        <i class="icon pe-angle-right"></i>
-                    </a>
-                </li>
-                <li class="news-li animate fade-up">
-                    <a href="#" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。">
-                        <div class="text">
-                            <div class="content">
-                                <p class="date"> 2018-03-30 </p>
-                                <h3 class="title">
-                                    <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
-                                </h3>
-                                <div class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</div>
-                            </div>
-                        </div>
-                        <div class="img">
-                            <img src="./src/assets/images/product.jpg" alt="新闻图片">
-                            <div class="border-wrap"></div>
-                        </div>
-                    </a>
-                    <a href="#" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
-                        <i class="icon pe-angle-right"></i>
-                    </a>
-                </li>
-            </div>
-            <div class="slide">aaaaaaa</div>
-            <div class="slide">bbbb</div>
-            <!-- <div class="slide" id="slide1">
-            <div class="intro">
-                <h1>Slide 2.1</h1>
-            </div>
-        </div>
-        <div class="slide active" id="slide2">
-            <div class="intro">
-                <h1>Slide 2.2</h1>
-                <p>
-                    We are using the class `active` on this section and in this particular horizontal slide. This way it will appear on the viewport on page load, instead of the 1st section 1st slide.
-                </p>
-                <p>You can apply the same logic to horizontal slides</p>
-            </div>
-        </div>
-        <div class="slide" id="slide3">
-            <h1>Slide 2.3</h1>
-        </div> -->
-            <!-- <h2 class="section-title animate fade-up">前沿资讯</h2> -->
-            <!-- <div class="process-timeline">
-                <div class="process-step animate fade-up">
-                    <div class="step-number">1</div>
-                    <h3>需求分析</h3>
-                    <p>深入了解客户需求，制定个性化方案</p>
+                <div class="container slide">
+                    <div class="head">
+                        <h3 class="title">**新资讯</h3>
+                        <span class="line">News Introduce</span>
+                    </div>
+                    <div class="news-content">
+                            <ul class="news-ul">
+                                <div class="slick-list draggable">
+                                    <div class="slick-track" role="listbox">
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="news-li animate fade-up" tabindex="-1" role="option" aria-describedby="slick-slide00" data-slick-index="0" aria-hidden="false">
+                                            <a href="news/shownews.php?id=4" class="news-li-item" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <div class="text">
+                                                    <div class="content">
+                                                        <p class="date">
+                                                            2018-03-30 </p>
+                                                        <h3 class="title">
+                                                            <span>数据源、storm应用、结果集。storm应用从数据源读取数据。</span>
+                                                        </h3>
+                                                        <p class="description">有赞使用storm已经有将近3年时间，稳定支撑着实时统计、数据同步、对账、监控、风控等业务。订单实时统计是其中一个典型的业务，对数据准确性、性能等方面都有较高要求，也是上线时间**久的一个实时计算应用。通过订单实时统计，描述使用storm时，遇到的准确性、性能、可靠性等方面的问题。订单实时统计的演进**版：流程走通在使用storm之前，显示实时统计数据一般有两种方案：在数据库里执行count、sum</p>
+                                                    </div>
+                                                </div>
+                                                <div class="img swiper-lazy swiper-lazy-loaded aaaa" >
+                                                    <img src="./src/assets/images/product.jpg" alt="">
+                                                </div>
+                                            </a>
+                                            <a href="news/shownews.php?id=4" class="news-more" title="数据源、storm应用、结果集。storm应用从数据源读取数据。" target="_self" tabindex="0">
+                                                <i class="icon pe-angle-right"></i>
+                                            </a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </ul>
+                    </div>
                 </div>
-                <div class="process-step animate fade-up">
-                    <div class="step-number">2</div>
-                    <h3>方案设计</h3>
-                    <p>专业团队设计最优解决方案</p>
-                </div>
-                <div class="process-step animate fade-up">
-                    <div class="step-number">3</div>
-                    <h3>开发实施</h3>
-                    <p>高效执行，确保项目质量</p>
-                </div>
-                <div class="process-step animate fade-up">
-                    <div class="step-number">4</div>
-                    <h3>售后服务</h3>
-                    <p>持续支持，及时响应</p>
-                </div>
-            </div> -->
+            </section>
         </div>
         <!-- 新增：联系我们屏 -->
         <div class="section" id="section6">
@@ -1909,26 +1983,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="contact-container">
-                <div class="contact-info animate fade-left">
-                    <h2>联系我们</h2>
-                    <p>地址：北京市*******</p>
-                    <p>电话：010-12345678</p>
-                    <p>邮箱：contact@example.com</p>
-                </div>
-                <div class="contact-form animate fade-right">
-                    <h3>发送消息</h3>
-                    <div class="form-group">
-                        <input type="text" placeholder="您的姓名">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="您的邮箱">
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="您的留言" rows="4"></textarea>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <!-- 新增：合作伙伴屏 -->
         <!-- <div class="section" id="section7">
@@ -2015,6 +2069,7 @@
             startAutoScroll();
         };
         // 首屏自动切换结束
+
         const animatedSections = new Set();
         // 页面分屏展示
         new fullpage('#fullpage', {
